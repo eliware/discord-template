@@ -31,6 +31,11 @@ A modern Discord app built with Node.js, based on the [@eliware/discord](https:/
 - Ready for deployment with systemd or Docker
 - Jest for testing
 
+## Requirements
+
+- Node.js 26 or newer
+- A Discord application and credentials for live use
+
 ## Getting Started
 
 1. **Clone this project:**
@@ -112,6 +117,14 @@ A modern Discord app built with Node.js, based on the [@eliware/discord](https:/
   ```
 
 - Add your tests in the `tests/` folder or alongside your code.
+
+## Errors / Troubleshooting
+
+This is a starter application, not a production bot. Keep credentials in `.env`, verify intents and permissions, and use controlled credentials before running `npm start`.
+
+## Security
+
+Never commit `.env`, bot tokens, passwords, private keys, or credential-bearing URLs. Store secrets in deployment secret storage and grant only required bot permissions.
 
 ## Support
 
