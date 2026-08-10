@@ -7,7 +7,7 @@ import { log, fs, path, registerHandlers, registerSignals } from '@eliware/commo
 registerHandlers({ log });
 registerSignals({ log });
 
-const packageJson = JSON.parse(fs.readFileSync(path(import.meta, 'package.json')), 'utf8');
+const packageJson = JSON.parse(fs.readFileSync(path(import.meta, 'package.json'), 'utf8'));
 const version = packageJson.version;
 
 const presence = { activities: [{ name: `discord-template v${version}`, type: 4 }], status: 'online' };
@@ -31,4 +31,9 @@ const client = await createDiscord({
         GuildVoiceStates: false,
     }
 });
-registerSignals({ shutdownHook: () => client.destroy() });
+registerSignals({
+    log,
+    shutdownHook: async () => {
+        await client.destroy();
+    }
+});

@@ -27,7 +27,7 @@ A modern Discord app built with Node.js, based on the [@eliware/discord](https:/
 - Command and event handler architecture
 - Multi-language/localized responses
 - Environment variable support via dotenv
-- Logging and signal handling via `@eliware/common`
+- Structured logging, error handling, and signal handling via `@eliware/common`
 - Ready for deployment with systemd or Docker
 - Jest for testing
 
@@ -107,6 +107,10 @@ A modern Discord app built with Node.js, based on the [@eliware/discord](https:/
 
 - Add or update language files in the `locales/` directory.
 - Localize command names, descriptions, and app responses.
+
+## Lifecycle
+
+The template registers process error handlers and graceful signal handling through `@eliware/common`. The signal registration is idempotent; the client shutdown hook is added after Discord startup and awaited during cleanup.
 
 ## Testing
 
