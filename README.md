@@ -9,6 +9,7 @@ A modern Discord app built with Node.js, based on the [@eliware/discord](https:/
 ## Table of Contents
 
 - [Features](#features)
+- [Requirements](#requirements)
 - [Getting Started](#getting-started)
 - [Configuration](#configuration)
 - [Running as a Service (systemd)](#running-as-a-service-systemd)
@@ -18,8 +19,11 @@ A modern Discord app built with Node.js, based on the [@eliware/discord](https:/
   - [Events](#events)
   - [Locales](#locales)
 - [Testing](#testing)
+- [Errors / Troubleshooting](#errors--troubleshooting)
+- [Security](#security)
 - [Support](#support)
 - [License](#license)
+- [Links](#links)
 
 ## Features
 
