@@ -1,6 +1,8 @@
 # [![eliware.org](https://eliware.org/logos/brand.png)](https://discord.gg/M6aTR9eTwN)
 
-## @eliware/discord-template [![npm version](https://img.shields.io/npm/v/@eliware/discord-template.svg)](https://www.npmjs.com/package/@eliware/discord-template)[![license](https://img.shields.io/github/license/eliware/discord-template.svg)](LICENSE)[![build status](https://github.com/eliware/discord-template/actions/workflows/nodejs.yml/badge.svg)](https://github.com/eliware/discord-template/actions)
+## @eliware/discord-template [![license](https://img.shields.io/github/license/eliware/discord-template.svg)](LICENSE)[![build status](https://github.com/eliware/discord-template/actions/workflows/nodejs.yml/badge.svg)](https://github.com/eliware/discord-template/actions)
+
+Documentation: [docs](docs/README.md) · [specifications](specs/README.md) · [examples](examples/README.md) · [release notes](RELEASE_NOTES.md)
 
 A modern Discord app built with Node.js, based on the [@eliware/discord](https://github.com/eliware/discord) foundation.
 
@@ -40,7 +42,7 @@ A modern Discord app built with Node.js, based on the [@eliware/discord](https:/
 - Node.js 26 or newer
 - A Discord application and credentials for live use
 
-## Getting Started
+## Setup
 
 1. **Clone this project:**
 
@@ -62,6 +64,16 @@ A modern Discord app built with Node.js, based on the [@eliware/discord](https:/
    # or
    node discord-template.mjs
    ```
+
+## Usage
+
+Run the template locally with controlled Discord credentials, or use the
+documented Docker/systemd examples for an authorized deployment.
+
+## Development
+
+Customize commands, events, locales, and deployment examples while preserving
+the documented Discord permissions and lifecycle behavior.
 
 ## Configuration
 
@@ -126,7 +138,7 @@ The template registers process error handlers and graceful signal handling throu
 
 - Add your tests in the `tests/` folder or alongside your code.
 
-## Errors / Troubleshooting
+## Troubleshooting
 
 This is a starter application, not a production bot. Keep credentials in `.env`, verify intents and permissions, and use controlled credentials before running `npm start`.
 

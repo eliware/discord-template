@@ -17,7 +17,9 @@
 ## Development
 
 - Use Node.js 26 and native ESM.
+- Read README.md, applicable specs, and the shared Docs, Conventions, and Operations authorities before changing files.
 - Keep commands, events, and locales application-owned and runnable from the documented directories.
+- Preserve required Discord intents and permissions when changing commands or events.
 - Keep Discord credentials in `.env`; never commit secrets.
 - Preserve safe startup, shutdown, Docker, and systemd examples.
 
