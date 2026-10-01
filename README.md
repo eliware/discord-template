@@ -92,7 +92,7 @@ For help or discussion, join the Eliware community:
 - Documentation: [docs](docs/README.md) · [specifications](specs/README.md) · [release notes](RELEASE_NOTES.md)
 - [Canonical repository profile specifications](https://github.com/eliware/test/blob/main/specs/conventions/README.md)
 - [Home Page](https://eliware.org)
-- [GitHub Repo](https://github.com/eliware/discord-template)
+- [GitHub Repo](https://github.com/eliware/discord-template) (`git+https://github.com/eliware/discord-template.git`)
 - [GitHub Org](https://github.com/eliware)
 - [Eli Sterling on GitHub](https://github.com/eli-sterling)
 - [Discord](https://discord.gg/M6aTR9eTwN)
