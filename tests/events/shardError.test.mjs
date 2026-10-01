@@ -1,7 +1,7 @@
-import { jest, expect, test } from '@jest/globals';
-import handler from '../../events/shardError.mjs';
+import { jest, expect, test } from "@jest/globals";
+import handler from "../../src/events/shardError.mjs";
 
-test('shardError handler stub', async () => {
+test("shardError handler stub", async () => {
   const log = { debug: jest.fn(), info: jest.fn(), error: jest.fn(), warn: jest.fn() };
   await expect(handler({ log })).resolves.toBeUndefined();
 });

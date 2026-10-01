@@ -1,4 +1,1 @@
-// events/webhookUpdate.mjs
-export default async function ({ log }, channel) {
-    log.debug('webhookUpdate', { channel });
-}
+export { default } from "../src/events/webhookUpdate.mjs";

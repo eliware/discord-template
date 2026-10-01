@@ -1,4 +1,1 @@
-// events/emojiUpdate.mjs
-export default async function ({ log }, oldEmoji, newEmoji) {
-    log.debug('emojiUpdate', { oldEmoji, newEmoji });
-}
+export { default } from "../src/events/emojiUpdate.mjs";

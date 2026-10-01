@@ -1,12 +1,17 @@
 {
-  "version": "8.0",
-  "repositoryId": "eliware/discord-template",
-  "description": "Repository-specific directive index; shared rules remain authoritative in eliware/conventions.",
+  "version": "9.0",
+  "description": "Repository-specific Discord application requirements.",
   "directives": [
     {
-      "id": "E-1",
-      "source": "eliware/conventions",
-      "profiles": ["general", "application", "discord"]
+      "id": "E-1030",
+      "dos": [
+        "Keep the root commands/ and events/ directories as discovery adapters for @eliware/discord.",
+        "Keep command and event implementations under src/ with exactly mirrored tests/ files.",
+        "Validate command definitions and all supported locale catalogs before starting the Discord client."
+      ],
+      "donts": [
+        "Do not move the library discovery directories, connect to Discord during tests, or commit credentials."
+      ]
     }
   ]
 }

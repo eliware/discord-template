@@ -1,4 +1,1 @@
-// events/threadCreate.mjs
-export default async function ({ log }, thread) {
-    log.debug('threadCreate', { thread });
-}
+export { default } from "../src/events/threadCreate.mjs";

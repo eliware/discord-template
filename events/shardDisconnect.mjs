@@ -1,4 +1,1 @@
-// events/shardDisconnect.mjs
-export default async function ({ log }, event, id) {
-    log.debug('shardDisconnect', { event, id });
-}
+export { default } from "../src/events/shardDisconnect.mjs";

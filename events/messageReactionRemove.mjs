@@ -1,4 +1,1 @@
-// events/messageReactionRemove.mjs
-export default async function ({ log }, reaction, user) {
-    log.debug('messageReactionRemove', { reaction, user });
-}
+export { default } from "../src/events/messageReactionRemove.mjs";

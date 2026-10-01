@@ -1,4 +1,1 @@
-// events/stageInstanceCreate.mjs
-export default async function ({ log }, stageInstance) {
-    log.debug('stageInstanceCreate', { stageInstance });
-}
+export { default } from "../src/events/stageInstanceCreate.mjs";

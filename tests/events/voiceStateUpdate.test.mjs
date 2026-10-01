@@ -1,7 +1,7 @@
-import { jest, expect, test } from '@jest/globals';
-import handler from '../../events/voiceStateUpdate.mjs';
+import { jest, expect, test } from "@jest/globals";
+import handler from "../../src/events/voiceStateUpdate.mjs";
 
-test('voiceStateUpdate handler stub', async () => {
+test("voiceStateUpdate handler stub", async () => {
   const log = { debug: jest.fn(), info: jest.fn(), error: jest.fn(), warn: jest.fn() };
   await expect(handler({ log })).resolves.toBeUndefined();
 });

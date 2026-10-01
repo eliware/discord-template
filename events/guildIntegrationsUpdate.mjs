@@ -1,4 +1,1 @@
-// events/guildIntegrationsUpdate.mjs
-export default async function ({ log }, guild) {
-    log.debug('guildIntegrationsUpdate', { guild });
-}
+export { default } from "../src/events/guildIntegrationsUpdate.mjs";

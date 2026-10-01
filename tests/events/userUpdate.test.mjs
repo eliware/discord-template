@@ -1,7 +1,7 @@
-import { jest, expect, test } from '@jest/globals';
-import handler from '../../events/userUpdate.mjs';
+import { jest, expect, test } from "@jest/globals";
+import handler from "../../src/events/userUpdate.mjs";
 
-test('userUpdate handler stub', async () => {
+test("userUpdate handler stub", async () => {
   const log = { debug: jest.fn(), info: jest.fn(), error: jest.fn(), warn: jest.fn() };
   await expect(handler({ log })).resolves.toBeUndefined();
 });

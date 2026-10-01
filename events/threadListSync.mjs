@@ -1,4 +1,1 @@
-// events/threadListSync.mjs
-export default async function ({ log }, threads) {
-    log.debug('threadListSync', { threads });
-}
+export { default } from "../src/events/threadListSync.mjs";

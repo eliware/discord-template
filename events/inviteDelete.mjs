@@ -1,4 +1,1 @@
-// events/inviteDelete.mjs
-export default async function ({ log }, invite) {
-    log.debug('inviteDelete', { invite });
-}
+export { default } from "../src/events/inviteDelete.mjs";

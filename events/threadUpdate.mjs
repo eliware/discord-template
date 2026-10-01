@@ -1,4 +1,1 @@
-// events/threadUpdate.mjs
-export default async function ({ log }, oldThread, newThread) {
-    log.debug('threadUpdate', { oldThread, newThread });
-}
+export { default } from "../src/events/threadUpdate.mjs";

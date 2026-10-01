@@ -1,4 +1,1 @@
-// events/guildScheduledEventCreate.mjs
-export default async function ({ log }, guildScheduledEvent) {
-    log.debug('guildScheduledEventCreate', { guildScheduledEvent });
-}
+export { default } from "../src/events/guildScheduledEventCreate.mjs";

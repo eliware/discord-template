@@ -1,7 +1,7 @@
-import { jest, expect, test } from '@jest/globals';
-import handler from '../../events/guildBanRemove.mjs';
+import { jest, expect, test } from "@jest/globals";
+import handler from "../../src/events/guildBanRemove.mjs";
 
-test('guildBanRemove handler stub', async () => {
+test("guildBanRemove handler stub", async () => {
   const log = { debug: jest.fn(), info: jest.fn(), error: jest.fn(), warn: jest.fn() };
   await expect(handler({ log })).resolves.toBeUndefined();
 });

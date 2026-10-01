@@ -1,39 +1,15 @@
 #!/usr/bin/env node
-import 'dotenv/config';
-//import { createDb } from '@eliware/mysql';
-import { createDiscord } from '@eliware/discord';
-import { log, fs, path, registerHandlers, registerSignals } from '@eliware/common';
+import { readFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+import { discordDependencies, startDiscordApplication } from "./src/application.mjs";
+import { validateDiscordConfiguration } from "./src/configuration.mjs";
 
-registerHandlers({ log });
-registerSignals({ log });
-
-const packageJson = JSON.parse(fs.readFileSync(path(import.meta, 'package.json'), 'utf8'));
-const version = packageJson.version;
-
-const presence = { activities: [{ name: `discord-template v${version}`, type: 4 }], status: 'online' };
-
-//const db = await createDb({ log });
-//registerSignals({ shutdownHook: () => db.end() });
-const client = await createDiscord({
-    log,
-    rootDir: path(import.meta),
-    context: {
-        //db,
-        presence,
-        version
-    },
-    intents: {
-        Guilds: true,
-        GuildMessages: true,
-        MessageContent: false,
-        GuildMembers: false,
-        GuildPresences: false,
-        GuildVoiceStates: false,
-    }
-});
-registerSignals({
-    log,
-    shutdownHook: async () => {
-        await client.destroy();
-    }
+const rootDir = dirname(fileURLToPath(import.meta.url));
+const { version } = JSON.parse(readFileSync(join(rootDir, "package.json"), "utf8"));
+await startDiscordApplication({
+  ...discordDependencies,
+  rootDir,
+  version,
+  validateConfiguration: () => validateDiscordConfiguration(rootDir),
 });

@@ -1,4 +1,1 @@
-// events/typingStart.mjs
-export default async function ({ log }, typing) {
-    log.debug('typingStart', { typing });
-}
+export { default } from "../src/events/typingStart.mjs";

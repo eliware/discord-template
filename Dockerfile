@@ -1,12 +1,13 @@
-FROM ubuntu:latest
-RUN apt-get update && \
-    apt-get install -y curl ca-certificates && \
-    curl -fsSL https://deb.nodesource.com/setup_22.x | bash - && \
-    apt-get install -y nodejs && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
-WORKDIR /app
-COPY package.json ./
-COPY package-lock.json ./
-RUN npm install || true
-COPY . .
+FROM node:26-bookworm-slim
+
+WORKDIR /opt/discord-template
+COPY package.json package-lock.json ./
+RUN npm ci --omit=dev && npm cache clean --force
+COPY --chown=node:node discord-template.mjs ./
+COPY --chown=node:node commands ./commands
+COPY --chown=node:node events ./events
+COPY --chown=node:node locales ./locales
+COPY --chown=node:node src ./src
+
+USER node
 CMD ["node", "discord-template.mjs"]

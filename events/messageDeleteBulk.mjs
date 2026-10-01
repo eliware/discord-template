@@ -1,4 +1,1 @@
-// events/messageDeleteBulk.mjs
-export default async function ({ log }, messages) {
-    log.debug('messageDeleteBulk', { messages });
-}
+export { default } from "../src/events/messageDeleteBulk.mjs";
