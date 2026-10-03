@@ -1,6 +1,6 @@
 # [![eliware.org](https://eliware.org/logos/brand.png)](https://discord.gg/M6aTR9eTwN)
 
-## @eliware/discord-template [![license](https://img.shields.io/github/license/eliware/discord-template.svg)](LICENSE) [![CI](https://github.com/eliware/discord-template/actions/workflows/ci.yml/badge.svg)](https://github.com/eliware/discord-template/actions/workflows/ci.yml)
+## @eliware/discord-template [![License](https://img.shields.io/github/license/eliware/discord-template)](https://github.com/eliware/discord-template/blob/main/LICENSE) [![CI](https://github.com/eliware/discord-template/actions/workflows/ci.yml/badge.svg)](https://github.com/eliware/discord-template/actions/workflows/ci.yml)
 
 ## Table of Contents
 
@@ -23,9 +23,11 @@
 
 ## Features
 
-Purpose: provide a Discord application starter with localized help commands, event handlers, structured logging, graceful shutdown, container packaging, and complete locale data.
+This template owns a reusable Discord application baseline; each derived application owns its commands, events, permissions, and runtime behavior.
 
-Package description: A modern Discord app built with Node.js, based on the eliware/discord foundation. Author: Eli Sterling, eliware.org <eli@eliware.org>. License: MIT.
+Package description: A modern Discord app built with Node.js, based on the eliware/discord foundation. Author: Eliware <eliware@eliware.org>. License: MIT.
+
+Purpose: provide a Discord application starter with localized help commands, event handlers, structured logging, graceful shutdown, container packaging, and complete locale data.
 
 ## Requirements
 
@@ -42,6 +44,8 @@ Run `node discord-template.mjs` to validate configuration and start the Discord 
 ## Development
 
 Read [AGENTS.md](AGENTS.md), [specifications](specs/README.md), and the shared conventions before changing the template. Implement commands, events, and application logic under `src/`; keep root `commands/` and `events/` discovery adapters because `@eliware/discord` loads handlers from those directories.
+
+Documentation: [docs](docs/README.md) · [specifications](specs/README.md)
 
 ## Testing
 
@@ -89,10 +93,12 @@ For help or discussion, join the Eliware community:
 
 ## Links
 
-- Documentation: [docs](docs/README.md) · [specifications](specs/README.md) · [release notes](RELEASE_NOTES.md)
-- [Canonical repository profile specifications](https://github.com/eliware/test/blob/main/specs/conventions/README.md)
-- [Home Page](https://eliware.org)
-- [GitHub Repo](https://github.com/eliware/discord-template) (`git+https://github.com/eliware/discord-template.git`)
-- [GitHub Org](https://github.com/eliware)
-- [Eli Sterling on GitHub](https://github.com/eli-sterling)
+- [docs](docs/README.md)
+- [Home Page](https://github.com/eliware/discord-template#readme)
+- [GitHub repository](https://github.com/eliware/discord-template.git)
+- [Eliware](https://eliware.org)
+- [GitHub organization](https://github.com/eliware)
 - [Discord](https://discord.gg/M6aTR9eTwN)
+- [Documentation](https://github.com/eliware/docs/blob/main/repo-map.yaml)
+- [specifications](specs/README.md)
+- [Release Notes](RELEASE_NOTES.md)
