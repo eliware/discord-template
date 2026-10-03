@@ -10,9 +10,11 @@ Scope: this repository owns the Discord starter application, its commands, event
 
 ## Layout
 
-Required structure: `discord-template.mjs` is the executable entrypoint. `src/` contains application implementation and `tests/` mirrors it. The root `commands/` and `events/` directories contain discovery adapters required by `@eliware/discord`; `locales/` contains the supported message catalogs. `docs/` and `specs/` contain user documentation and repository directives. `.knit/deploy.yaml` defines development validation.
+Required structure: `bin/discord-template.mjs` is the executable entrypoint. `src/` contains application implementation and `tests/` mirrors it. The root `commands/` and `events/` directories contain discovery adapters required by `@eliware/discord`; `locales/` contains the supported message catalogs. `docs/` and `specs/` contain user documentation and repository directives. `.knit/deploy.yaml` defines development validation.
 
 ## Development
+
+Before changing files, read the root README.md, applicable AGENTS.md instructions, applicable documentation, and applicable specifications.
 
 Use Node.js 26, npm, and native ESM `.mjs` modules. Runtime environment configuration uses `.env`; package metadata is not runtime configuration. This guidance applies repository-wide; nearer AGENTS.md instructions apply to their subdirectories. Read README.md, applicable specifications, implementation, and tests before changing behavior. Every source and test module must have one single responsibility: one cohesive purpose and one reason to change. Business-logic modules and coordinators are valid, including coordinators of coordinators, when each module has one distinct responsibility. When a change introduces a distinct responsibility, create a focused submodule with a mirrored test and wire it through its owner; do not add the new responsibility to an existing module. Refactor them when mixed responsibilities are found during ordinary review. The 100-line source and 200-line test maxima are blocking; passing them does not prove cohesion or permit mixed responsibilities.
 
@@ -32,7 +34,7 @@ Keep changes actionable, current, and concise. Project-specific instructions may
 
 ## Application
 
-The runtime entrypoint is `discord-template.mjs`; it loads `.env` and delegates startup to `src/application.mjs`. Startup validates the command definition and locale catalog before connecting. `DISCORD_CLIENT_ID` and `DISCORD_TOKEN` are required; `LOG_LEVEL` defaults to `info`. Shutdown awaits client destruction. The application connects to Discord and exposes command interactions; its safe operational boundary is limited to the documented intents and bot permissions. Package metadata and `.knit/deploy.yaml` are not runtime configuration.
+The runtime entrypoint is `bin/discord-template.mjs`; it loads `.env` and delegates startup to `src/application.mjs`. Startup validates the command definition and locale catalog before connecting. `DISCORD_CLIENT_ID` and `DISCORD_TOKEN` are required; `LOG_LEVEL` defaults to `info`. Shutdown awaits client destruction. The application connects to Discord and exposes command interactions; its safe operational boundary is limited to the documented intents and bot permissions. Package metadata and `.knit/deploy.yaml` are not runtime configuration.
 
 ## Discord
 
@@ -40,4 +42,4 @@ The starter provides the localized `/help` command. The client enables Guilds an
 
 ## GHCR publication
 
-The public image is `ghcr.io/eliware/discord-template`, built from the repository-root Dockerfile and context. Its visibility is public after publication. `.github/workflows/publish.yml` publishes version-tagged images after validation, creates a signed GitHub artifact attestation as provenance, and verifies the exact image digest. Workflow credentials come from GitHub's token. Publication does not deploy the bot. Require the Operations release handoff to publish and a separate GitOps deployment handoff for any rollout.
+The public image is `ghcr.io/eliware/discord-template`, built from the repository-root Dockerfile and context. Its visibility is public after publication. `.github/workflows/publish.yaml` publishes version-tagged images after validation, creates a signed GitHub artifact attestation as provenance, and verifies the exact image digest. Workflow credentials come from GitHub's token. Publication does not deploy the bot. Require the Operations release handoff to publish and a separate GitOps deployment handoff for any rollout.

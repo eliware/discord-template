@@ -1,9 +1,9 @@
 {
   "name": "@eliware/discord-template",
   "type": "module",
-  "version": "10.0.0",
+  "version": "11.0.0",
   "description": "A modern Discord app built with Node.js, based on the eliware/discord foundation.",
-  "main": "discord-template.mjs",
+  "main": "./bin/discord-template.mjs",
   "scripts": {
     "test": "eliware-test",
     "lint": "eliware-test --lint",

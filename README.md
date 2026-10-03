@@ -1,6 +1,6 @@
 # [![eliware.org](https://eliware.org/logos/brand.png)](https://discord.gg/M6aTR9eTwN)
 
-## @eliware/discord-template [![License](https://img.shields.io/github/license/eliware/discord-template)](https://github.com/eliware/discord-template/blob/main/LICENSE) [![CI](https://github.com/eliware/discord-template/actions/workflows/ci.yml/badge.svg)](https://github.com/eliware/discord-template/actions/workflows/ci.yml)
+## @eliware/discord-template [![License](https://img.shields.io/github/license/eliware/discord-template)](https://github.com/eliware/discord-template/blob/main/LICENSE) [![CI](https://github.com/eliware/discord-template/actions/workflows/ci.yaml/badge.svg)](https://github.com/eliware/discord-template/actions/workflows/ci.yaml)
 
 ## Table of Contents
 
@@ -39,7 +39,12 @@ Create a repository from this template, update the package identity and reposito
 
 ## Usage
 
-Run `node discord-template.mjs` to validate configuration and start the Discord client. The entrypoint loads `.env`, registers process handlers, and closes the client during shutdown. Live startup connects to Discord and requires valid application credentials.
+Run `node bin/discord-template.mjs` to validate configuration and start the Discord client. The entrypoint loads `.env`, registers process handlers, and closes the client during shutdown. Live startup connects to Discord and requires valid application credentials.
+
+Image: ghcr.io/eliware/discord-template
+Pull command: docker pull ghcr.io/eliware/discord-template:v11.0.0
+Supported tags: vMAJOR.MINOR.PATCH
+Deployment boundary: publication does not deploy; deploy by immutable version tag and recorded sha256 digest.
 
 ## Development
 
@@ -65,7 +70,7 @@ Never commit `.env`, Discord tokens, passwords, private keys, or credential-bear
 
 ## Operations
 
-Startup validates the command definition and locale catalog before creating a Discord client. The client connects with the declared intents; shutdown awaits client destruction. The externally observable workflows are Discord gateway connectivity and command interactions. The operational boundary permits only the documented intents and permissions. Use `node discord-template.mjs` with the required credentials, or build the container with `docker build -t discord-template .` and run it with `docker run --env-file .env discord-template`. The public image is `ghcr.io/eliware/discord-template`; pull a released version with `docker pull ghcr.io/eliware/discord-template:vMAJOR.MINOR.PATCH`. Only exact version tags identify releases. Publication does not deploy the bot. Any release requires the Operations release handoff, and a rollout requires a separate GitOps deployment handoff.
+Startup validates the command definition and locale catalog before creating a Discord client. The client connects with the declared intents; shutdown awaits client destruction. The externally observable workflows are Discord gateway connectivity and command interactions. The operational boundary permits only the documented intents and permissions. Use `node bin/discord-template.mjs` with the required credentials, or build the container with `docker build -t discord-template .` and run it with `docker run --env-file .env discord-template`. The public image is `ghcr.io/eliware/discord-template`; pull a released version with `docker pull ghcr.io/eliware/discord-template:vMAJOR.MINOR.PATCH`. Only exact version tags identify releases. Publication does not deploy the bot. Any release requires the Operations release handoff, and a rollout requires a separate GitOps deployment handoff.
 
 ## Commands
 
