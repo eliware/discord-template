@@ -16,13 +16,15 @@ Required structure: `bin/discord-template.mjs` is the executable entrypoint. `sr
 
 Before changing files, read the root README.md, applicable AGENTS.md instructions, applicable documentation, and applicable specifications.
 
-Use Node.js 26, npm, and native ESM `.mjs` modules. Runtime environment configuration uses `.env`; package metadata is not runtime configuration. This guidance applies repository-wide; nearer AGENTS.md instructions apply to their subdirectories. Read README.md, applicable specifications, implementation, and tests before changing behavior. Every source and test module must have one single responsibility: one cohesive purpose and one reason to change. Business-logic modules and coordinators are valid, including coordinators of coordinators, when each module has one distinct responsibility. When a change introduces a distinct responsibility, create a focused submodule with a mirrored test and wire it through its owner; do not add the new responsibility to an existing module. Refactor them when mixed responsibilities are found during ordinary review. The 100-line source and 200-line test maxima are blocking; passing them does not prove cohesion or permit mixed responsibilities.
+Use Node.js 26 or later, npm, and native ESM `.mjs` modules. Runtime environment configuration uses `.env`; package metadata is not runtime configuration. This guidance applies repository-wide; nearer AGENTS.md instructions apply to their subdirectories. Read README.md, applicable specifications, implementation, and tests before changing behavior. Every source and test module must have one single responsibility: one cohesive purpose and one reason to change. Business-logic modules and coordinators are valid, including coordinators of coordinators, when each module has one distinct responsibility. When a change introduces a distinct responsibility, create a focused submodule with a mirrored test and wire it through its owner; do not add the new responsibility to an existing module. Refactor them when mixed responsibilities are found during ordinary review. The 100-line source and 200-line test maxima are blocking; passing them does not prove cohesion or permit mixed responsibilities.
 
 Keep every `.mjs` under `src/` mirrored by exactly one `.test.mjs` under `tests/`; every test file must map to a source file. Place command and event implementations under `src/`; retain the root adapters so `@eliware/discord` can discover them. Place application-specific tests at the lowest module level that proves their behavior.
 
 ## Validation
 
-Use Node.js 26 with npm. Run `npm ci` after dependency changes and `npm test` before handoff. Aggregate validation runs Jest with 100% statement, branch, function, and line coverage, lint, format-check, audit, and applicable profile checks through `eliware-test`. CI runs `npm ci` followed by `npm test`. Do not launch a live Discord client for validation.
+Use `npm run lint`, `npm run audit`, `npm run format`, and `npm run format:check` as needed.
+
+Use Node.js 26 or later with npm. Run `npm ci` after dependency changes and `npm test` before handoff. Aggregate validation runs Jest with 100% statement, branch, function, and line coverage, lint, format-check, audit, and applicable profile checks through `eliware-test`. CI runs `npm ci` followed by `npm test`. Do not launch a live Discord client for validation.
 
 ## Security
 
@@ -43,3 +45,8 @@ The starter provides the localized `/help` command. The client enables Guilds an
 ## GHCR publication
 
 The public image is `ghcr.io/eliware/discord-template`, built from the repository-root Dockerfile and context. Its visibility is public after publication. `.github/workflows/publish.yaml` publishes version-tagged images after validation, creates a signed GitHub artifact attestation as provenance, and verifies the exact image digest. Workflow credentials come from GitHub's token. Publication does not deploy the bot. Require the Operations release handoff to publish and a separate GitOps deployment handoff for any rollout.
+
+Image: ghcr.io/eliware/discord-template
+Pull command: docker pull ghcr.io/eliware/discord-template:v12.0.0
+Supported tags: vMAJOR.MINOR.PATCH
+Deployment boundary: publication does not deploy; deploy by immutable version tag and recorded sha256 digest.

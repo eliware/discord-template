@@ -1,12 +1,5 @@
 import { jest, expect, test } from "@jest/globals";
-import { discordDependencies, startDiscordApplication } from "../src/application.mjs";
-
-test("provides the declared application runtime dependencies", () => {
-  expect(typeof discordDependencies.createClient).toBe("function");
-  expect(typeof discordDependencies.log.info).toBe("function");
-  expect(typeof discordDependencies.registerHandlers).toBe("function");
-  expect(typeof discordDependencies.registerSignals).toBe("function");
-});
+import { startDiscordApplication } from "../src/application.mjs";
 
 test("validates, starts Discord, and registers awaited client shutdown", async () => {
   const log = {};

@@ -1,14 +1,3 @@
-import "dotenv/config";
-import { createDiscord } from "@eliware/discord";
-import { log, registerHandlers, registerSignals } from "@eliware/common";
-
-export const discordDependencies = {
-  createClient: createDiscord,
-  log,
-  registerHandlers,
-  registerSignals,
-};
-
 export async function startDiscordApplication({
   createClient,
   log,

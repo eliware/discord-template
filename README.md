@@ -1,6 +1,8 @@
 # [![eliware.org](https://eliware.org/logos/brand.png)](https://discord.gg/M6aTR9eTwN)
 
-@eliware/discord-template [![License](https://img.shields.io/github/license/eliware/discord-template)](https://github.com/eliware/discord-template/blob/main/LICENSE) [![CI](https://github.com/eliware/discord-template/actions/workflows/ci.yaml/badge.svg)](https://github.com/eliware/discord-template/actions/workflows/ci.yaml)
+## @eliware/discord-template [![License](https://img.shields.io/github/license/eliware/discord-template)](https://github.com/eliware/discord-template/blob/main/LICENSE) [![CI](https://github.com/eliware/discord-template/actions/workflows/ci.yaml/badge.svg)](https://github.com/eliware/discord-template/actions/workflows/ci.yaml)
+
+A modern Discord app built with Node.js, based on the eliware/discord foundation.
 
 ## Table of Contents
 
@@ -18,20 +20,18 @@
 - [Events](#events)
 - [Intents and permissions](#intents-and-permissions)
 - [Support](#support)
-- [License](#license)
 - [Links](#links)
+- [License](#license)
 
 ## Features
 
 This template owns a reusable Discord application baseline; each derived application owns its commands, events, permissions, and runtime behavior.
 
-Package description: A modern Discord app built with Node.js, based on the eliware/discord foundation. Author: Eliware <eliware@eliware.org>. License: MIT.
-
 Purpose: provide a Discord application starter with localized help commands, event handlers, structured logging, graceful shutdown, container packaging, and complete locale data.
 
 ## Requirements
 
-Use Node.js 26 and npm. Docker is required only to build and run the container image. A Discord application and its credentials are required for live startup.
+Use Node.js 26 or later and npm. Docker is required only to build and run the container image. A Discord application and its credentials are required for live startup.
 
 ## Setup
 
@@ -45,6 +45,8 @@ Image: ghcr.io/eliware/discord-template
 Pull command: docker pull ghcr.io/eliware/discord-template:v11.0.0
 Supported tags: vMAJOR.MINOR.PATCH
 Deployment boundary: publication does not deploy; deploy by immutable version tag and recorded sha256 digest.
+
+Read [RELEASE_NOTES.md](RELEASE_NOTES.md) for release history.
 
 ## Development
 
@@ -86,23 +88,20 @@ The client enables Guilds and GuildMessages intents. MessageContent, GuildMember
 
 ## Support
 
-For help or discussion, join the Eliware community:
+For help, questions, or to chat with the author and community, visit:
 
-[![Discord](https://eliware.org/logos/discord_96.png)](https://discord.gg/M6aTR9eTwN)
+[![Discord](https://eliware.org/logos/discord_96.png)](https://discord.gg/M6aTR9eTwN)[![eliware.org](https://eliware.org/logos/eliware_96.png)](https://discord.gg/M6aTR9eTwN)
 
 **[eliware.org on Discord](https://discord.gg/M6aTR9eTwN)**
 
-## License
-
-[license](LICENSE)
-
 ## Links
 
-- [docs](docs/README.md)
-- [Home Page](https://github.com/eliware/discord-template#readme)
-- [GitHub repository](https://github.com/eliware/discord-template.git)
-- [Eliware](https://eliware.org)
-- [GitHub organization](https://github.com/eliware)
+- [Home Page](https://eliware.org)
+- [GitHub Org](https://github.com/eliware)
+- [GitHub Repo](https://github.com/eliware/discord-template)
+- [Bug Reports](https://github.com/eliware/discord-template/issues)
 - [Discord](https://discord.gg/M6aTR9eTwN)
-- [specifications](specs/README.md)
-- [Release Notes](RELEASE_NOTES.md)
+
+## License
+
+[MIT © Eliware](LICENSE)
