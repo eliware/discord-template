@@ -33,7 +33,6 @@ export const discordEvents = [
   "invalidated",
   "inviteCreate",
   "inviteDelete",
-  "messageBulkDelete",
   "messageCreate",
   "messageDelete",
   "messageDeleteBulk",
