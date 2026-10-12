@@ -2,11 +2,11 @@ import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { validateEventInventory } from "../../src/events/validate-inventory.mjs";
+import { validateEventInventory } from "../../../src/rules/events/validate-inventory.mjs";
 
 test("accepts all maintained Discord event adapters", async () => {
   const errors = await validateEventInventory(
-    fileURLToPath(new URL("../../events/", import.meta.url)),
+    fileURLToPath(new URL("../../../events/", import.meta.url)),
   );
   expect(errors).toEqual([]);
 });

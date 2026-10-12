@@ -1,4 +1,4 @@
-import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -36,4 +36,10 @@ test("reports a missing base locale and uses an empty key set", () => {
   } finally {
     rmSync(directory, { recursive: true, force: true });
   }
+});
+
+test("keeps the en-GB help message in English", () => {
+  const enGb = JSON.parse(readFileSync(new URL("../../locales/en-GB.json", import.meta.url)));
+  const enUs = JSON.parse(readFileSync(new URL("../../locales/en-US.json", import.meta.url)));
+  expect(enGb.help).toBe(enUs.help);
 });
