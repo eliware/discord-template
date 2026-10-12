@@ -16,6 +16,18 @@ Set `DISCORD_CLIENT_ID` and `DISCORD_TOKEN`. Set `LOG_LEVEL` only when needed. I
 
 Declare only the intents and permissions that the bot needs. Grant those permissions to the bot in each server. Protect the token as a secret.
 
+## Install the bot
+
+1. Open the application in the Discord Developer Portal.
+2. Open OAuth2, then URL Generator.
+3. Select `bot` and `applications.commands` under Scopes.
+4. Select View Channels and Send Messages under Bot Permissions.
+5. Copy the generated URL and open it in a browser.
+6. Select the server, then authorize the bot.
+
+These scopes register `/help` and add the bot to a server. These permissions let `/help` reply in a channel.
+Do not grant Administrator for this template.
+
 ## Commands and events
 
 Put command and event logic under `src/`. Keep root `commands/` and `events/` as discovery adapters for `@eliware/discord`.
