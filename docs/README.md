@@ -44,7 +44,11 @@ The process closes the Discord client during shutdown. Tests use mocks and local
 
 ## Container image
 
-Build the image with `docker build -t discord-template .`. The image is `ghcr.io/eliware/discord-template`.
+Build a local image with `docker build -t discord-template .`.
+
+> **Template setup — update these values after you create a Discord application repository.**
+>
+> This template has no published image. Set the image visibility, pull access, and supported architectures. The workflow builds `linux/amd64`. Name the owner for build inputs and architecture decisions. Update the README and publication workflow before you publish an image.
 
 Use a released version tag and its recorded SHA-256 digest for deployment. Publication does not deploy the bot. Use an authorized deployment process.
 

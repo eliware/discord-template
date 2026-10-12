@@ -67,8 +67,13 @@ Set `LOG_LEVEL` to `error`, `warn`, `info`, `http`, `verbose`, `debug`, or `sill
 ## Operations
 
 Run `node bin/discord-template.mjs` to validate settings and connect to Discord.
-Build the image with `docker build -t discord-template .`. Use `ghcr.io/eliware/discord-template` after an approved release.
-Deploy with a released version tag and its recorded SHA-256 digest. Publication does not deploy the bot.
+Build a local image with `docker build -t discord-template .`.
+
+> **Template setup — update these values after you create a Discord application repository.**
+>
+> This template has no published image. Set the image visibility to public or private. Set who can pull it. The workflow builds `linux/amd64`; confirm or change the supported architectures. Name the owner for build inputs and architecture decisions. Update this section and the publication workflow before you publish an image.
+
+Deploy with an approved version tag and its recorded SHA-256 digest. Publication does not deploy the bot.
 
 ## Commands
 
