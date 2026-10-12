@@ -51,6 +51,22 @@ test("rejects a base locale that is not an object", () => {
   }
 });
 
+test("rejects translated catalogs that are not string maps", () => {
+  const directory = mkdtempSync(join(tmpdir(), "discord-locales-invalid-catalog-"));
+  try {
+    writeFileSync(join(directory, "en-US.json"), JSON.stringify({ help: "Help" }));
+    writeFileSync(join(directory, "fr.json"), "null");
+    writeFileSync(join(directory, "de.json"), "[]");
+    writeFileSync(join(directory, "es.json"), JSON.stringify({ help: 1 }));
+    const errors = validateLocaleDirectory(directory);
+    expect(errors).toContain("invalid locale catalog: fr.json");
+    expect(errors).toContain("invalid locale catalog: de.json");
+    expect(errors).toContain("invalid locale catalog: es.json");
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+  }
+});
+
 test("keeps the en-GB help message in English", () => {
   const enGb = JSON.parse(readFileSync(new URL("../../locales/en-GB.json", import.meta.url)));
   const enUs = JSON.parse(readFileSync(new URL("../../locales/en-US.json", import.meta.url)));

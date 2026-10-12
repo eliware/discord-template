@@ -2,6 +2,12 @@ import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { supportedLocales } from "./supported-locales.mjs";
 
+const isCatalog = (values) =>
+  values !== null &&
+  typeof values === "object" &&
+  !Array.isArray(values) &&
+  Object.values(values).every((value) => typeof value === "string");
+
 export function validateLocaleDirectory(directory) {
   const errors = [];
   const files = readdirSync(directory).filter((file) => file.endsWith(".json"));
@@ -12,7 +18,7 @@ export function validateLocaleDirectory(directory) {
   let english;
   try {
     english = JSON.parse(readFileSync(join(directory, "en-US.json"), "utf8"));
-    if (!english || typeof english !== "object" || Array.isArray(english)) throw new Error();
+    if (!isCatalog(english)) throw new Error();
   } catch {
     errors.push("invalid or missing base locale: en-US.json");
     english = undefined;
@@ -24,6 +30,10 @@ export function validateLocaleDirectory(directory) {
       values = JSON.parse(readFileSync(join(directory, file), "utf8"));
     } catch {
       errors.push(`invalid JSON: ${file}`);
+      continue;
+    }
+    if (!isCatalog(values)) {
+      errors.push(`invalid locale catalog: ${file}`);
       continue;
     }
     if (!supportedLocales.includes(locale)) errors.push(`unsupported locale: ${locale}`);
