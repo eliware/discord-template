@@ -17,7 +17,8 @@ export default async function (
   } else {
     return;
   }
-  const locale = interaction.locale || interaction.guild?.preferredLocale || "en-US";
+  const locale =
+    interaction.locale || interaction.guildLocale || interaction.guild?.preferredLocale || "en-US";
   const localeMsg = (key, defaultMsg) => msg(locale, key, defaultMsg, log);
   const handler = handlers?.[key];
   if (handler) {

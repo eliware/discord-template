@@ -17,7 +17,7 @@ test("dispatches the localized interaction to its command handler", async () => 
     isChatInputCommand: () => true,
     commandName: "help",
     locale: "fr",
-    guild: { preferredLocale: "de" },
+    guild: { preferredLocale: "es" },
   };
   await handler(context, interaction);
   expect(command).toHaveBeenCalledWith(
@@ -36,7 +36,8 @@ test("uses the guild locale and then the default locale when interaction locale 
   await handler(context, {
     isChatInputCommand: () => true,
     commandName: "help",
-    guild: { preferredLocale: "de" },
+    guildLocale: "de",
+    guild: { preferredLocale: "es" },
   });
   await handler(context, { isChatInputCommand: () => true, commandName: "help" });
   expect(msg).toHaveBeenNthCalledWith(1, "de", "help", "This is the help text.", context.log);
