@@ -2,7 +2,7 @@ import { jest, expect, test } from "@jest/globals";
 import handler from "../../src/events/interactionCreate.mjs";
 
 test("ignores commands without a registered handler", async () => {
-  const interaction = { commandName: "missing", locale: "en-US" };
+  const interaction = { isChatInputCommand: () => true, commandName: "missing", locale: "en-US" };
   await expect(handler({ log: {}, commandHandlers: {} }, interaction)).resolves.toBeUndefined();
 });
 
@@ -13,7 +13,12 @@ test("dispatches the localized interaction to its command handler", async () => 
     localizedMessage("help", "This is the help text."),
   );
   const context = { client: {}, log, msg, commandHandlers: { help: command }, version: "9.0.0" };
-  const interaction = { commandName: "help", locale: "fr", guild: { preferredLocale: "de" } };
+  const interaction = {
+    isChatInputCommand: () => true,
+    commandName: "help",
+    locale: "fr",
+    guild: { preferredLocale: "de" },
+  };
   await handler(context, interaction);
   expect(command).toHaveBeenCalledWith(
     { client: context.client, log, msg: expect.any(Function), version: "9.0.0" },
@@ -28,8 +33,24 @@ test("uses the guild locale and then the default locale when interaction locale 
     localizedMessage("help", "This is the help text."),
   );
   const context = { log: {}, msg, commandHandlers: { help: command } };
-  await handler(context, { commandName: "help", guild: { preferredLocale: "de" } });
-  await handler(context, { commandName: "help" });
+  await handler(context, {
+    isChatInputCommand: () => true,
+    commandName: "help",
+    guild: { preferredLocale: "de" },
+  });
+  await handler(context, { isChatInputCommand: () => true, commandName: "help" });
   expect(msg).toHaveBeenNthCalledWith(1, "de", "help", "This is the help text.", context.log);
   expect(msg).toHaveBeenNthCalledWith(2, "en-US", "help", "This is the help text.", context.log);
+});
+
+test("ignores interactions that are not chat input commands", async () => {
+  const command = jest.fn();
+  await handler(
+    { log: {}, commandHandlers: { help: command } },
+    {
+      isChatInputCommand: () => false,
+      commandName: "help",
+    },
+  );
+  expect(command).not.toHaveBeenCalled();
 });

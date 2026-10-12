@@ -74,6 +74,7 @@ Deploy with a released version tag and its recorded SHA-256 digest. Publication 
 ## Commands
 
 The starter registers the localized `/help` command. Its definition is `commands/help.json`. Its implementation is `src/commands/help.mjs`.
+The source also includes a `!help` message handler. It needs the privileged Message Content intent, which is disabled by default in `src/application.mjs`.
 Keep the root `commands/` file as a discovery adapter. Update the definition and implementation together.
 
 ## Events
@@ -83,7 +84,7 @@ Keep the same keys in every locale file. Each event module must have a matching 
 
 ## Intents and permissions
 
-The client enables Guilds and GuildMessages. It disables MessageContent, GuildMembers, GuildPresences, and GuildVoiceStates.
+The client enables Guilds and GuildMessages. It disables MessageContent, GuildMembers, GuildPresences, and GuildVoiceStates. Enable MessageContent in `src/application.mjs` and in the Discord Developer Portal to use `!help` in guilds.
 The `/help` command needs channel view and message send permissions. Add access only when a command or event needs it.
 
 ## Support

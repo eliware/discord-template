@@ -25,3 +25,12 @@ test("reports invalid command and localized fields", () => {
   expect(errors).toContain("localized name is missing or invalid: bg");
   expect(errors).toContain("localized description is missing or invalid: bg");
 });
+
+test("rejects unsupported localized locales", () => {
+  const invalid = {
+    ...definition,
+    name_localizations: { ...definition.name_localizations, xx: "help" },
+    description_localizations: { ...definition.description_localizations, xx: "Help" },
+  };
+  expect(validateHelpDefinition(invalid)).toContain("unsupported localized locale: xx");
+});

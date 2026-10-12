@@ -4,6 +4,12 @@ const chatInputName = /^[-_'\p{L}\p{N}\p{sc=Deva}\p{sc=Thai}]{1,32}$/u;
 
 export function validateHelpDefinition(definition) {
   const errors = [];
+  for (const field of ["name_localizations", "description_localizations"]) {
+    for (const locale of Object.keys(definition?.[field] ?? {})) {
+      if (!supportedLocales.includes(locale))
+        errors.push(`unsupported localized locale: ${locale}`);
+    }
+  }
   if (definition?.type !== 1) errors.push("type must be 1");
   if (!chatInputName.test(definition?.name ?? "")) errors.push("name is invalid");
   if (

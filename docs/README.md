@@ -22,6 +22,8 @@ Put command and event logic under `src/`. Keep root `commands/` and `events/` as
 
 Add command definitions and locale text in their indexed data files. Validate all command definitions and supported locale files before client startup. Keep the same command keys in every supported locale.
 
+The starter also includes a `!help` message handler. It needs the privileged Message Content intent. The template disables this intent by default. Enable it in `src/application.mjs` and in the Discord Developer Portal to use `!help` in guilds.
+
 ## Start and stop
 
 Run `node bin/discord-template.mjs` to validate settings and connect to Discord. Live startup needs valid credentials and network access.

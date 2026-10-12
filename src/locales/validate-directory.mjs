@@ -12,8 +12,10 @@ export function validateLocaleDirectory(directory) {
   let english;
   try {
     english = JSON.parse(readFileSync(join(directory, "en-US.json"), "utf8"));
+    if (!english || typeof english !== "object" || Array.isArray(english)) throw new Error();
   } catch {
     errors.push("invalid or missing base locale: en-US.json");
+    english = undefined;
   }
   for (const file of files) {
     const locale = file.slice(0, -5);
@@ -25,9 +27,9 @@ export function validateLocaleDirectory(directory) {
       continue;
     }
     if (!supportedLocales.includes(locale)) errors.push(`unsupported locale: ${locale}`);
-    if (locale !== "en-US") {
-      const missing = Object.keys(english ?? {}).filter((key) => !Object.hasOwn(values, key));
-      const extra = Object.keys(values).filter((key) => !Object.hasOwn(english ?? {}, key));
+    if (locale !== "en-US" && english) {
+      const missing = Object.keys(english).filter((key) => !Object.hasOwn(values, key));
+      const extra = Object.keys(values).filter((key) => !Object.hasOwn(english, key));
       if (missing.length || extra.length) errors.push(`locale keys differ: ${file}`);
     }
   }

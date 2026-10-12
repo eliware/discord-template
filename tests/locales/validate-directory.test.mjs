@@ -26,13 +26,26 @@ test("reports missing, unsupported, malformed, and mismatched locale data", () =
   }
 });
 
-test("reports a missing base locale and uses an empty key set", () => {
+test("reports a missing base locale without comparing translated keys", () => {
   const directory = mkdtempSync(join(tmpdir(), "discord-locales-base-"));
   try {
     writeFileSync(join(directory, "fr.json"), JSON.stringify({ help: "Aide" }));
     const errors = validateLocaleDirectory(directory);
     expect(errors).toContain("invalid or missing base locale: en-US.json");
-    expect(errors).toContain("locale keys differ: fr.json");
+    expect(errors).not.toContain("locale keys differ: fr.json");
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+  }
+});
+
+test("rejects a base locale that is not an object", () => {
+  const directory = mkdtempSync(join(tmpdir(), "discord-locales-invalid-base-"));
+  try {
+    writeFileSync(join(directory, "en-US.json"), "[]");
+    writeFileSync(join(directory, "fr.json"), JSON.stringify({ help: "Aide" }));
+    const errors = validateLocaleDirectory(directory);
+    expect(errors).toContain("invalid or missing base locale: en-US.json");
+    expect(errors).not.toContain("locale keys differ: fr.json");
   } finally {
     rmSync(directory, { recursive: true, force: true });
   }

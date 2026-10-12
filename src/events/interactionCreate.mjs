@@ -1,5 +1,6 @@
 // events/interactionCreate.mjs
 export default async function ({ client, log, msg, commandHandlers, ...contextData }, interaction) {
+  if (!interaction.isChatInputCommand()) return;
   const locale = interaction.locale || interaction.guild?.preferredLocale || "en-US";
   const localeMsg = (key, defaultMsg) => msg(locale, key, defaultMsg, log);
   const handler = commandHandlers?.[interaction.commandName];

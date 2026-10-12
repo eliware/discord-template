@@ -15,6 +15,15 @@ test("ignores messages authored by the bot", async () => {
   expect(app.msg).not.toHaveBeenCalled();
 });
 
+test("ignores messages before the client is ready", async () => {
+  const app = context();
+  app.client.user = null;
+  await expect(
+    handler(app, { id: "m0", author: { id: "user" }, content: "!help" }),
+  ).resolves.toBeUndefined();
+  expect(app.msg).not.toHaveBeenCalled();
+});
+
 test("replies to help in the guild locale", async () => {
   const app = context();
   const message = {
