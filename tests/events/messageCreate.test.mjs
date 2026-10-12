@@ -11,7 +11,12 @@ function context() {
 
 test("ignores messages authored by the bot", async () => {
   const app = context();
-  await handler(app, { id: "m1", author: { id: "bot-id" }, content: "!help" });
+  await handler(app, {
+    id: "m1",
+    author: { id: "bot-id" },
+    content: "!help",
+    guild: {},
+  });
   expect(app.msg).not.toHaveBeenCalled();
 });
 
@@ -19,7 +24,7 @@ test("ignores messages before the client is ready", async () => {
   const app = context();
   app.client.user = null;
   await expect(
-    handler(app, { id: "m0", author: { id: "user" }, content: "!help" }),
+    handler(app, { id: "m0", author: { id: "user" }, content: "!help", guild: {} }),
   ).resolves.toBeUndefined();
   expect(app.msg).not.toHaveBeenCalled();
 });
@@ -40,7 +45,27 @@ test("replies to help in the guild locale", async () => {
 
 test("uses the default locale and ignores other user messages", async () => {
   const app = context();
-  const message = { id: "m3", author: { id: "user" }, content: "hello", reply: jest.fn() };
+  const message = {
+    id: "m3",
+    author: { id: "user" },
+    content: "hello",
+    guild: {},
+    reply: jest.fn(),
+  };
   await handler(app, message);
+  expect(app.msg).not.toHaveBeenCalled();
+});
+
+test("ignores direct messages", async () => {
+  const app = context();
+  const message = {
+    id: "m4",
+    author: { id: "user" },
+    content: "!help",
+    guild: null,
+    reply: jest.fn(),
+  };
+  await handler(app, message);
+  expect(message.reply).not.toHaveBeenCalled();
   expect(app.msg).not.toHaveBeenCalled();
 });

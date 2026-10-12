@@ -66,6 +66,15 @@ test("ignores interactions that are not chat input commands", async () => {
   expect(component).not.toHaveBeenCalled();
 });
 
+test("ignores interactions without unused type predicates", async () => {
+  const command = jest.fn();
+  await handler(
+    { log: {}, commandHandlers: { help: command } },
+    { isChatInputCommand: () => false, commandName: "help" },
+  );
+  expect(command).not.toHaveBeenCalled();
+});
+
 test("dispatches autocomplete interactions to their command handler", async () => {
   const autocomplete = jest.fn();
   const interaction = {

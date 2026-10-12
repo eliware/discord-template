@@ -5,13 +5,13 @@ export default async function (
 ) {
   let handlers;
   let key;
-  if (interaction.isChatInputCommand()) {
+  if (interaction.isChatInputCommand?.()) {
     handlers = commandHandlers;
     key = interaction.commandName;
-  } else if (interaction.isAutocomplete()) {
+  } else if (interaction.isAutocomplete?.()) {
     handlers = autocompleteHandlers;
     key = interaction.commandName;
-  } else if (interaction.isMessageComponent()) {
+  } else if (interaction.isMessageComponent?.()) {
     handlers = componentHandlers;
     key = interaction.customId;
   } else {
