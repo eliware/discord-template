@@ -45,12 +45,62 @@ test("uses the guild locale and then the default locale when interaction locale 
 
 test("ignores interactions that are not chat input commands", async () => {
   const command = jest.fn();
+  const autocomplete = jest.fn();
+  const component = jest.fn();
   await handler(
-    { log: {}, commandHandlers: { help: command } },
+    {
+      log: {},
+      commandHandlers: { help: command },
+      autocompleteHandlers: { help: autocomplete },
+      componentHandlers: { help: component },
+    },
     {
       isChatInputCommand: () => false,
+      isAutocomplete: () => false,
+      isMessageComponent: () => false,
       commandName: "help",
     },
   );
   expect(command).not.toHaveBeenCalled();
+  expect(autocomplete).not.toHaveBeenCalled();
+  expect(component).not.toHaveBeenCalled();
+});
+
+test("dispatches autocomplete interactions to their command handler", async () => {
+  const autocomplete = jest.fn();
+  const interaction = {
+    isChatInputCommand: () => false,
+    isAutocomplete: () => true,
+    isMessageComponent: () => false,
+    commandName: "search",
+  };
+  await handler(
+    { log: {}, msg: jest.fn(), autocompleteHandlers: { search: autocomplete } },
+    interaction,
+  );
+  expect(autocomplete).toHaveBeenCalledWith(
+    { client: undefined, log: expect.any(Object), msg: expect.any(Function) },
+    interaction,
+  );
+});
+
+test("dispatches component interactions to their custom ID handler", async () => {
+  const component = jest.fn();
+  const interaction = {
+    isChatInputCommand: () => false,
+    isAutocomplete: () => false,
+    isMessageComponent: () => true,
+    customId: "confirm",
+  };
+  const context = {
+    client: {},
+    log: {},
+    msg: jest.fn(),
+    componentHandlers: { confirm: component },
+  };
+  await handler(context, interaction);
+  expect(component).toHaveBeenCalledWith(
+    { client: context.client, log: context.log, msg: expect.any(Function) },
+    interaction,
+  );
 });
