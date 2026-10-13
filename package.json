@@ -10,7 +10,7 @@
     "discord-app",
     "nodejs"
   ],
-  "private": false,
+  "private": true,
   "main": "./bin/discord-template.mjs",
   "scripts": {
     "test": "eliware-test",
