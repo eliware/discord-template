@@ -1,6 +1,6 @@
 import { join } from "node:path";
-import { validateHelpDefinition } from "./commands/validate-help-definition.mjs";
-import { validateLocaleDirectory } from "./locales/validate-directory.mjs";
+import { validateHelpDefinition } from "./commands/validate/help-definition.mjs";
+import { validateLocaleDirectory } from "./locales/validate/directory.mjs";
 
 export function validateDiscordConfiguration(rootDirectory, environment = process.env, fileSystem) {
   const definition = JSON.parse(

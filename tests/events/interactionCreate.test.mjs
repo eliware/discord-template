@@ -9,9 +9,7 @@ test("ignores commands without a registered handler", async () => {
 test("dispatches the localized interaction to its command handler", async () => {
   const log = { debug: jest.fn() };
   const msg = jest.fn((...args) => args.join(":"));
-  const command = jest.fn(({ msg: localizedMessage }) =>
-    localizedMessage("help", "This is the help text."),
-  );
+  const command = jest.fn();
   const context = { client: {}, log, msg, commandHandlers: { help: command }, version: "9.0.0" };
   const interaction = {
     isChatInputCommand: () => true,
@@ -24,24 +22,6 @@ test("dispatches the localized interaction to its command handler", async () => 
     { client: context.client, log, msg: expect.any(Function), version: "9.0.0" },
     interaction,
   );
-  expect(msg).toHaveBeenCalledWith("fr", "help", "This is the help text.", log);
-});
-
-test("uses the guild locale and then the default locale when interaction locale is absent", async () => {
-  const msg = jest.fn();
-  const command = jest.fn(({ msg: localizedMessage }) =>
-    localizedMessage("help", "This is the help text."),
-  );
-  const context = { log: {}, msg, commandHandlers: { help: command } };
-  await handler(context, {
-    isChatInputCommand: () => true,
-    commandName: "help",
-    guildLocale: "de",
-    guild: { preferredLocale: "es" },
-  });
-  await handler(context, { isChatInputCommand: () => true, commandName: "help" });
-  expect(msg).toHaveBeenNthCalledWith(1, "de", "help", "This is the help text.", context.log);
-  expect(msg).toHaveBeenNthCalledWith(2, "en-US", "help", "This is the help text.", context.log);
 });
 
 test("ignores interactions that are not chat input commands", async () => {

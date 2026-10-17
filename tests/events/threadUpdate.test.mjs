@@ -1,7 +1,13 @@
-import { jest, expect, test } from "@jest/globals";
+import { expect, jest, test } from "@jest/globals";
 import handler from "../../src/events/threadUpdate.mjs";
 
-test("threadUpdate handler stub", async () => {
-  const log = { debug: jest.fn(), info: jest.fn(), error: jest.fn(), warn: jest.fn() };
-  await expect(handler({ log })).resolves.toBeUndefined();
+test("logs the threadUpdate event payload", async () => {
+  const log = { debug: jest.fn() };
+  const eventValue1 = { marker: "oldThread" };
+  const eventValue2 = { marker: "newThread" };
+  await handler({ log }, eventValue1, eventValue2);
+  expect(log.debug).toHaveBeenCalledWith("threadUpdate", {
+    oldThread: eventValue1,
+    newThread: eventValue2,
+  });
 });

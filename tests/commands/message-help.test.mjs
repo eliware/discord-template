@@ -8,5 +8,6 @@ test("logs the help response", async () => {
 
   await messageHelp({ log, msg }, message);
 
+  expect(message.reply).toHaveBeenCalledWith("help response");
   expect(log.debug).toHaveBeenCalledWith("!help Response", { response: "help response" });
 });

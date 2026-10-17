@@ -1,7 +1,13 @@
-import { jest, expect, test } from "@jest/globals";
+import { expect, jest, test } from "@jest/globals";
 import handler from "../../src/events/messageReactionAdd.mjs";
 
-test("messageReactionAdd handler stub", async () => {
-  const log = { debug: jest.fn(), info: jest.fn(), error: jest.fn(), warn: jest.fn() };
-  await expect(handler({ log })).resolves.toBeUndefined();
+test("logs the messageReactionAdd event payload", async () => {
+  const log = { debug: jest.fn() };
+  const eventValue1 = { marker: "reaction" };
+  const eventValue2 = { marker: "user" };
+  await handler({ log }, eventValue1, eventValue2);
+  expect(log.debug).toHaveBeenCalledWith("messageReactionAdd", {
+    reaction: eventValue1,
+    user: eventValue2,
+  });
 });

@@ -1,7 +1,9 @@
-import { jest, expect, test } from "@jest/globals";
+import { expect, jest, test } from "@jest/globals";
 import handler from "../../src/events/error.mjs";
 
-test("error handler stub", async () => {
-  const log = { debug: jest.fn(), info: jest.fn(), error: jest.fn(), warn: jest.fn() };
-  await expect(handler({ log })).resolves.toBeUndefined();
+test("logs the error event payload", async () => {
+  const log = { error: jest.fn() };
+  const eventValue1 = { marker: "error" };
+  await handler({ log }, eventValue1);
+  expect(log.error).toHaveBeenCalledWith("error", { error: eventValue1 });
 });

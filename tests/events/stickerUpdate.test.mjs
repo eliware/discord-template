@@ -1,7 +1,13 @@
-import { jest, expect, test } from "@jest/globals";
+import { expect, jest, test } from "@jest/globals";
 import handler from "../../src/events/stickerUpdate.mjs";
 
-test("stickerUpdate handler stub", async () => {
-  const log = { debug: jest.fn(), info: jest.fn(), error: jest.fn(), warn: jest.fn() };
-  await expect(handler({ log })).resolves.toBeUndefined();
+test("logs the stickerUpdate event payload", async () => {
+  const log = { debug: jest.fn() };
+  const eventValue1 = { marker: "oldSticker" };
+  const eventValue2 = { marker: "newSticker" };
+  await handler({ log }, eventValue1, eventValue2);
+  expect(log.debug).toHaveBeenCalledWith("stickerUpdate", {
+    oldSticker: eventValue1,
+    newSticker: eventValue2,
+  });
 });

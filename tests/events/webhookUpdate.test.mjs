@@ -1,7 +1,9 @@
-import { jest, expect, test } from "@jest/globals";
+import { expect, jest, test } from "@jest/globals";
 import handler from "../../src/events/webhookUpdate.mjs";
 
-test("webhookUpdate handler stub", async () => {
-  const log = { debug: jest.fn(), info: jest.fn(), error: jest.fn(), warn: jest.fn() };
-  await expect(handler({ log })).resolves.toBeUndefined();
+test("logs the webhookUpdate event payload", async () => {
+  const log = { debug: jest.fn() };
+  const eventValue1 = { marker: "channel" };
+  await handler({ log }, eventValue1);
+  expect(log.debug).toHaveBeenCalledWith("webhookUpdate", { channel: eventValue1 });
 });

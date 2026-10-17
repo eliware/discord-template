@@ -1,7 +1,13 @@
-import { jest, expect, test } from "@jest/globals";
+import { expect, jest, test } from "@jest/globals";
 import handler from "../../src/events/shardResume.mjs";
 
-test("shardResume handler stub", async () => {
-  const log = { debug: jest.fn(), info: jest.fn(), error: jest.fn(), warn: jest.fn() };
-  await expect(handler({ log })).resolves.toBeUndefined();
+test("logs the shardResume event payload", async () => {
+  const log = { debug: jest.fn() };
+  const eventValue1 = { marker: "id" };
+  const eventValue2 = { marker: "replayedEvents" };
+  await handler({ log }, eventValue1, eventValue2);
+  expect(log.debug).toHaveBeenCalledWith("shardResume", {
+    id: eventValue1,
+    replayedEvents: eventValue2,
+  });
 });

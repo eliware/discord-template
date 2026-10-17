@@ -1,7 +1,15 @@
-import { jest, expect, test } from "@jest/globals";
+import { expect, jest, test } from "@jest/globals";
 import handler from "../../src/events/guildMembersChunk.mjs";
 
-test("guildMembersChunk handler stub", async () => {
-  const log = { debug: jest.fn(), info: jest.fn(), error: jest.fn(), warn: jest.fn() };
-  await expect(handler({ log })).resolves.toBeUndefined();
+test("logs the guildMembersChunk event payload", async () => {
+  const log = { debug: jest.fn() };
+  const eventValue1 = { marker: "members" };
+  const eventValue2 = { marker: "guild" };
+  const eventValue3 = { marker: "chunk" };
+  await handler({ log }, eventValue1, eventValue2, eventValue3);
+  expect(log.debug).toHaveBeenCalledWith("guildMembersChunk", {
+    members: eventValue1,
+    guild: eventValue2,
+    chunk: eventValue3,
+  });
 });

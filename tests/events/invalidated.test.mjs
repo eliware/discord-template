@@ -1,7 +1,9 @@
-import { jest, expect, test } from "@jest/globals";
+import { expect, jest, test } from "@jest/globals";
 import handler from "../../src/events/invalidated.mjs";
 
-test("invalidated handler stub", async () => {
-  const log = { debug: jest.fn(), info: jest.fn(), error: jest.fn(), warn: jest.fn() };
-  await expect(handler({ log })).resolves.toBeUndefined();
+test("logs the invalidated event payload", async () => {
+  const log = { debug: jest.fn() };
+
+  await handler({ log });
+  expect(log.debug).toHaveBeenCalledWith("invalidated");
 });
