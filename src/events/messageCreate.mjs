@@ -1,9 +1,9 @@
-import messageHelp from "../commands/message-help.mjs";
+import dispatchMessageCommand from "../commands/dispatch-message-command.mjs";
 
 export default async function ({ client, log, msg }, message) {
   log.debug("messageCreate", { id: message.id });
   if (!client.user || !message.author) return;
   if (!message.guild) return;
   if (message.author.id === client.user.id) return;
-  if (message.content === "!help") await messageHelp({ log, msg }, message);
+  await dispatchMessageCommand({ log, msg }, message);
 }

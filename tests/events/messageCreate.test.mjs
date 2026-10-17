@@ -43,7 +43,21 @@ test("replies to help in the guild locale", async () => {
   expect(message.reply).toHaveBeenCalledWith("help response");
 });
 
-test("uses the default locale and ignores other user messages", async () => {
+test("uses the default locale for help messages", async () => {
+  const app = context();
+  const message = {
+    id: "m3",
+    author: { id: "user" },
+    content: "!help",
+    guild: {},
+    reply: jest.fn(),
+  };
+  await handler(app, message);
+  expect(app.msg).toHaveBeenCalledWith("en-US", "help", "This is the help text.");
+  expect(message.reply).toHaveBeenCalledWith("help response");
+});
+
+test("ignores other user messages", async () => {
   const app = context();
   const message = {
     id: "m3",
@@ -54,6 +68,7 @@ test("uses the default locale and ignores other user messages", async () => {
   };
   await handler(app, message);
   expect(app.msg).not.toHaveBeenCalled();
+  expect(message.reply).not.toHaveBeenCalled();
 });
 
 test("ignores direct messages", async () => {
