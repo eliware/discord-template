@@ -4,6 +4,9 @@
 
 ### Changed
 
+- Split event handling, command validation, locale validation, and configuration checks into focused modules.
+- Add focused tests for event eligibility, interaction localization, command validation, and locale catalogs.
+- Validate lowercase rules for localized command names and test reply failure handling.
 - Align repository guidance, Discord documentation, and specifications with v13 conventions.
 - Use the canonical GHCR workflow to publish images and signed attestations.
 - Pass filesystem operations as parameters and use isolated test fixtures.
