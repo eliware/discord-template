@@ -1,5 +1,5 @@
 import { expect, jest, test } from "@jest/globals";
-import { createLocalizedMessage } from "../../src/events/create-localized-message.mjs";
+import { createLocalizedMessage } from "../../src/interactions/create-localized-message.mjs";
 
 test.each([
   [{ locale: "fr", guildLocale: "de", guild: { preferredLocale: "es" } }, "fr"],

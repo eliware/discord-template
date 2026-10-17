@@ -3,6 +3,7 @@ import { isValidCommandName } from "../../../../src/commands/validate/command/na
 
 test.each([
   ["help", true],
+  ["HELP", false],
   ["a".repeat(32), true],
   ["a".repeat(33), false],
   ["help command", false],

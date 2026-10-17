@@ -5,7 +5,7 @@ import { helpDefinition as definition } from "../../../../test-fixtures/discord-
 test("reports invalid and unsupported localized fields", () => {
   const invalid = {
     ...definition,
-    name_localizations: { ...definition.name_localizations, xx: "help", bg: "" },
+    name_localizations: { ...definition.name_localizations, xx: "help", bg: "Hilfe" },
     description_localizations: {
       ...definition.description_localizations,
       xx: "Help",

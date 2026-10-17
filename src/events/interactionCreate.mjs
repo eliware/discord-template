@@ -1,4 +1,4 @@
-import { createLocalizedMessage } from "./create-localized-message.mjs";
+import { createLocalizedMessage } from "../interactions/create-localized-message.mjs";
 import { resolveInteractionHandler } from "./resolve-interaction-handler.mjs";
 
 export default async function (
