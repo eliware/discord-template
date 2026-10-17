@@ -1,6 +1,6 @@
 {
   "name": "@eliware/discord-template",
-  "version": "12.0.0",
+  "version": "13.0.0",
   "type": "module",
   "description": "A modern Discord app built with Node.js, based on the eliware/discord foundation.",
   "keywords": [

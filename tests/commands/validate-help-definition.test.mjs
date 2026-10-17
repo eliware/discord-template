@@ -1,9 +1,5 @@
-import { readFileSync } from "node:fs";
 import { validateHelpDefinition } from "../../src/commands/validate-help-definition.mjs";
-
-const definition = JSON.parse(
-  readFileSync(new URL("../../commands/help.json", import.meta.url), "utf8"),
-);
+import { helpDefinition as definition } from "../../test-fixtures/discord-configuration.mjs";
 
 test("accepts the maintained localized help command", () => {
   expect(validateHelpDefinition(definition)).toEqual([]);

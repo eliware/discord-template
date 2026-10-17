@@ -1,25 +1,21 @@
-import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
-import { tmpdir } from "node:os";
-import { join } from "node:path";
-import { fileURLToPath } from "node:url";
+import { discordEvents } from "../../../src/events/discord-events.mjs";
 import { validateEventInventory } from "../../../src/rules/events/validate-inventory.mjs";
 
 test("accepts all maintained Discord event adapters", async () => {
-  const errors = await validateEventInventory(
-    fileURLToPath(new URL("../../../events/", import.meta.url)),
-  );
+  const directory = "/discord-test/events";
+  const errors = await validateEventInventory(directory, {
+    readDirectory: () => discordEvents.map((name) => `${name}.mjs`),
+    loadHandler: async () => ({ default: () => {} }),
+  });
   expect(errors).toEqual([]);
 });
 
 test("reports missing, unknown, and invalid event adapters", async () => {
-  const directory = mkdtempSync(join(tmpdir(), "discord-events-"));
-  try {
-    writeFileSync(join(directory, "unknown.mjs"), "export default null;\n");
-    const errors = await validateEventInventory(directory);
-    expect(errors).toContain("missing event: clientReady");
-    expect(errors).toContain("unknown event: unknown");
-    expect(errors).toContain("invalid event handler: unknown");
-  } finally {
-    rmSync(directory, { recursive: true, force: true });
-  }
+  const errors = await validateEventInventory("/discord-test/events", {
+    readDirectory: () => ["unknown.mjs"],
+    loadHandler: async () => ({ default: null }),
+  });
+  expect(errors).toContain("missing event: clientReady");
+  expect(errors).toContain("unknown event: unknown");
+  expect(errors).toContain("invalid event handler: unknown");
 });

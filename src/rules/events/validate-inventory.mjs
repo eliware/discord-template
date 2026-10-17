@@ -1,10 +1,8 @@
 import { discordEvents } from "../../events/discord-events.mjs";
-import { readdirSync } from "node:fs";
-import { pathToFileURL } from "node:url";
 import { join } from "node:path";
 
-export async function validateEventInventory(directory) {
-  const names = readdirSync(directory)
+export async function validateEventInventory(directory, { readDirectory, loadHandler }) {
+  const names = readDirectory(directory)
     .filter((file) => file.endsWith(".mjs"))
     .map((file) => file.slice(0, -4));
   const errors = discordEvents
@@ -16,7 +14,7 @@ export async function validateEventInventory(directory) {
       .map((name) => `unknown event: ${name}`),
   );
   for (const name of names) {
-    const handler = await import(pathToFileURL(join(directory, `${name}.mjs`)));
+    const handler = await loadHandler(join(directory, `${name}.mjs`));
     if (typeof handler.default !== "function") errors.push(`invalid event handler: ${name}`);
   }
   return errors;

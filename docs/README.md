@@ -14,7 +14,7 @@ Use this guide to create, configure, and run a Discord application from this tem
 
 Set `DISCORD_CLIENT_ID` and `DISCORD_TOKEN`. Set `LOG_LEVEL` only when needed. Its default is `info`.
 
-Declare only the intents and permissions that the bot needs. Grant those permissions to the bot in each server. Protect the token as a secret.
+Declare only the intents and permissions that the bot needs. Grant those permissions to the bot in each server. Keep the token secret.
 
 ## Install the bot
 
@@ -25,7 +25,7 @@ Declare only the intents and permissions that the bot needs. Grant those permiss
 5. Copy the generated URL and open it in a browser.
 6. Select the server, then authorize the bot.
 
-These scopes register `/help` and add the bot to a server. These permissions let `/help` reply in a channel.
+These scopes make `/help` available and add the bot to a server. These permissions let `/help` reply in a channel.
 Do not grant Administrator for this template.
 
 ## Commands and events
@@ -50,7 +50,7 @@ Build a local image with `docker build -t discord-template .`.
 >
 > This template has no published image. Set the image visibility, pull access, and supported architectures. The workflow builds `linux/amd64`. Name the owner for build inputs and architecture decisions. Update the README and publication workflow before you publish an image.
 
-Use a released version tag and its recorded SHA-256 digest for deployment. Publication does not deploy the bot. Use an authorized deployment process.
+Use a released version tag and its recorded SHA-256 digest for deployment. Publication does not deploy the bot. Use an approved deployment process.
 
 ## Validate
 

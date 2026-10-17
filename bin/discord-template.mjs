@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import "dotenv/config";
@@ -17,5 +17,6 @@ await startDiscordApplication({
   registerSignals,
   rootDir,
   version,
-  validateConfiguration: () => validateDiscordConfiguration(rootDir),
+  validateConfiguration: () =>
+    validateDiscordConfiguration(rootDir, process.env, { readFileSync, readdirSync }),
 });

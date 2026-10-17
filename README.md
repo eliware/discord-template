@@ -25,7 +25,7 @@ A modern Discord app built with Node.js, based on the eliware/discord foundation
 
 ## Features
 
-This template provides a reusable starting point. Each derived repository owns its product behavior and operating decisions.
+This template starts Discord applications. Each derived application owns its behavior and operating decisions.
 
 ## Requirements
 
@@ -52,7 +52,7 @@ Run `npm test` before handoff. It runs the repository checks through `eliware-te
 ## Troubleshooting
 
 Install the required Node.js and npm versions. Run `npm ci` after dependency changes.
-Review the file and rule in any validation error.
+For each validation error, examine the named file and rule.
 
 ## Security
 
@@ -71,13 +71,14 @@ Build a local image with `docker build -t discord-template .`.
 
 > **Template setup — update these values after you create a Discord application repository.**
 >
-> This template has no published image. Set the image visibility to public or private. Set who can pull it. The workflow builds `linux/amd64`; confirm or change the supported architectures. Name the owner for build inputs and architecture decisions. Update this section and the publication workflow before you publish an image.
+> This template has no published image. Set image visibility and pull access. The workflow builds `linux/amd64`. Confirm or change supported architectures. Name the owner for build inputs and architecture decisions. Update this section and the publication workflow before image publication.
 
 Deploy with an approved version tag and its recorded SHA-256 digest. Publication does not deploy the bot.
 
 ## Commands
 
 The starter registers the localized `/help` command. Its definition is `commands/help.json`. Its implementation is `src/commands/help.mjs`.
+
 The source also includes a `!help` message handler. It needs the privileged Message Content intent, which is disabled by default in `src/application.mjs`.
 Keep the root `commands/` file as a discovery adapter. Update the definition and implementation together.
 
