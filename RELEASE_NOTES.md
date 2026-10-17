@@ -11,6 +11,8 @@
 - Use the library current-directory default for command, event, and locale folders.
 - Use library signal and process handlers when the app has no other services to stop.
 - Call `client.shutdown()` during signal shutdown.
+- Validate Discord credentials, help command data, supported locale files, and locale keys before login.
+- Inject file system operations into configuration and locale checks for isolated tests.
 - Keep command and event adapters in the root discovery folders.
 - Keep command and event behavior in focused modules under `src/`.
 - Move message command routing to a focused command module.
