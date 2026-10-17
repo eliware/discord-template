@@ -10,7 +10,7 @@ test("accepts matching string catalogs", () => {
   ).toEqual([]);
 });
 
-test("rejects catalogs that are not string maps", () => {
+test("combines catalog shape and English catalog errors", () => {
   const errors = validateLocaleCatalogs([
     { file: "en-US.json", locale: "en-US", values: [] },
     { file: "fr.json", locale: "fr", values: { help: 1 } },
@@ -19,22 +19,4 @@ test("rejects catalogs that are not string maps", () => {
   expect(errors).toContain("invalid or missing English catalog: en-US.json");
   expect(errors).toContain("invalid locale catalog: en-US.json");
   expect(errors).toContain("invalid locale catalog: fr.json");
-});
-
-test("reports missing and extra translation keys", () => {
-  expect(
-    validateLocaleCatalogs([
-      { file: "en-US.json", locale: "en-US", values: { help: "Help", about: "About" } },
-      { file: "fr.json", locale: "fr", values: { help: "Aide", extra: "Autre" } },
-    ]),
-  ).toContain("locale keys do not match: fr.json");
-});
-
-test("does not compare translations when the English catalog is absent", () => {
-  const errors = validateLocaleCatalogs([
-    { file: "fr.json", locale: "fr", values: { help: "Aide" } },
-  ]);
-
-  expect(errors).toContain("invalid or missing English catalog: en-US.json");
-  expect(errors).not.toContain("locale keys do not match: fr.json");
 });

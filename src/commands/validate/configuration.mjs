@@ -1,5 +1,5 @@
 import { join } from "node:path";
-import { validateHelpDefinition } from "./help-definition.mjs";
+import { validateHelpDefinition } from "./help/definition.mjs";
 
 export function validateHelpConfiguration(rootDirectory, fileSystem) {
   const definition = JSON.parse(

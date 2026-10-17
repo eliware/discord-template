@@ -1,10 +1,14 @@
 import { discoverLocaleFiles } from "../discover-locale-files.mjs";
 import { loadLocaleCatalogs } from "../load-locale-catalogs.mjs";
 import { validateLocaleCatalogs } from "./catalogs.mjs";
+import { validateLocaleInventory } from "./inventory.mjs";
 
 export function validateLocaleDirectory(directory, fileSystem) {
-  const discovery = discoverLocaleFiles(directory, fileSystem);
-  const errors = [...discovery.errors];
-  const loaded = loadLocaleCatalogs(directory, discovery.files, fileSystem);
-  return [...errors, ...loaded.errors, ...validateLocaleCatalogs(loaded.catalogs)];
+  const files = discoverLocaleFiles(directory, fileSystem);
+  const loaded = loadLocaleCatalogs(directory, files, fileSystem);
+  return [
+    ...validateLocaleInventory(files),
+    ...loaded.errors,
+    ...validateLocaleCatalogs(loaded.catalogs),
+  ];
 }
