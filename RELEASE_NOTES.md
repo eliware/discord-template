@@ -29,6 +29,8 @@
 - Use the canonical Knit deployment settings.
 - Run focused test commands during development.
 - Keep tests disconnected from Discord and keep credentials out of Git.
+- List supported locale catalogs and document published container image access.
+- Document the GitHub publication environment and app-owned shutdown pattern.
 
 ## 12.0.0 — 2026-10-12
 

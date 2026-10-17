@@ -59,6 +59,8 @@ Image: ghcr.io/eliware/discord-template
 
 Pull command: docker pull ghcr.io/eliware/discord-template:v13.0.0
 
+Check the GHCR package page for available tags before deployment.
+
 Supported tags: vMAJOR.MINOR.PATCH
 
 Deployment boundary: Publication does not deploy. Use an immutable version tag and record its SHA-256 digest.

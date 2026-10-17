@@ -61,7 +61,8 @@ Use only approved secret stores for secret values.
 
 ## Configuration
 
-Set `DISCORD_CLIENT_ID` and `DISCORD_TOKEN` before startup. Set `LOG_LEVEL` to configure the logger. It defaults to `info`.
+Set `DISCORD_CLIENT_ID` and `DISCORD_TOKEN` before startup. Set `LOG_LEVEL` to configure the logger.
+It defaults to `info`. Use `error`, `warn`, `info`, `http`, `verbose`, `debug`, or `silly`.
 Store credentials in an untracked `.env` file or an approved secret store.
 
 ## Operations
@@ -71,7 +72,9 @@ Build a local image with `docker build -t discord-template .`.
 
 > **Template setup — update these values after you create a Discord application repository.**
 >
-> This template has no published image. Set image visibility and pull access. The workflow builds `linux/amd64`. Confirm or change supported architectures. Name the owner for build inputs and architecture decisions. Update this section and the publication workflow before image publication.
+> GHCR has a published `v12.0.0` image. [View available image tags](https://github.com/orgs/eliware/packages/container/discord-template).
+> The workflow builds `linux/amd64` images and publishes signed attestations. Configure the `ghcr-publish` GitHub environment for image publication.
+> Confirm supported architectures and image access. Update this section and the workflow when these values change.
 
 Deploy with an approved version tag and its recorded SHA-256 digest. Publication does not deploy the bot.
 
@@ -79,7 +82,7 @@ Deploy with an approved version tag and its recorded SHA-256 digest. Publication
 
 The starter registers the localized `/help` command. Its definition is `commands/help.json`. Its implementation is `src/commands/help.mjs`.
 
-The source also includes a `!help` message handler. It needs the privileged Message Content intent, which is disabled by default in `src/application.mjs`.
+The source also includes a `!help` message handler. It requires the privileged Message Content intent, which is disabled by default in `src/application.mjs`.
 Keep the root `commands/` file as a discovery adapter. Update the definition and implementation together.
 
 ## Events
