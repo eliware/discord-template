@@ -16,7 +16,7 @@ test("reports missing, unsupported, malformed, and mismatched locale data", () =
     files: {
       [join(directory, "en-US.json")]: JSON.stringify({ help: "Help" }),
       [join(directory, "fr.json")]: JSON.stringify({ help: "Aide" }),
-      [join(directory, "xx.json")]: JSON.stringify({ help: "Help" }),
+      [join(directory, "xx.json")]: JSON.stringify({ help: "Help", extra: "Extra" }),
       [join(directory, "bad.json")]: "{",
     },
   });
@@ -24,6 +24,7 @@ test("reports missing, unsupported, malformed, and mismatched locale data", () =
   expect(errors).toContain("missing locale: bg");
   expect(errors).toContain("unsupported locale: xx");
   expect(errors).toContain("invalid JSON: bad.json");
+  expect(errors).toContain("locale keys do not match: xx.json");
 });
 
 test("reports a missing base locale without comparing translated keys", () => {
