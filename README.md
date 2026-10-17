@@ -61,12 +61,12 @@ Use only approved secret stores for secret values.
 
 ## Configuration
 
-Set `DISCORD_CLIENT_ID` and `DISCORD_TOKEN` before startup. `LOG_LEVEL` defaults to `info`.
-Set `LOG_LEVEL` to `error`, `warn`, `info`, `http`, `verbose`, `debug`, or `silly`. Store credentials in an untracked `.env` file or an approved secret store.
+Set `DISCORD_CLIENT_ID` and `DISCORD_TOKEN` before startup. Set `LOG_LEVEL` to configure the logger. It defaults to `info`.
+Store credentials in an untracked `.env` file or an approved secret store.
 
 ## Operations
 
-Run `node bin/discord-template.mjs` to validate settings and connect to Discord.
+Run `node bin/discord-template.mjs` from the app root to validate settings and connect to Discord.
 Build a local image with `docker build -t discord-template .`.
 
 > **Template setup — update these values after you create a Discord application repository.**

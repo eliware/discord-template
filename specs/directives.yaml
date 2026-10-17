@@ -1,4 +1,4 @@
-version: "12.0"
+version: "13.0"
 description: Repository-specific Discord application requirements.
 directives:
   - id: E-1030.0
@@ -6,5 +6,7 @@ directives:
       - Keep root commands/ and events/ as discovery adapters for @eliware/discord.
       - Keep command and event code in src/ with matching tests/ files.
       - Validate command definitions and supported locale catalogs before Discord client startup.
+      - Use the library current working directory as the app root.
+      - Use library signal and process handlers when the app has no other services to stop.
     donts:
       - Do not move discovery folders, connect to Discord in tests, or commit credentials.

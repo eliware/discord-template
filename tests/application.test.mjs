@@ -1,29 +1,22 @@
 import { jest, expect, test } from "@jest/globals";
 import { startDiscordApplication } from "../src/application.mjs";
 
-test("validates, starts Discord, and registers awaited client shutdown", async () => {
+test("validates and starts Discord with library shutdown handlers", async () => {
   const log = {};
   const client = { shutdown: jest.fn().mockResolvedValue(undefined) };
   const createClient = jest.fn().mockResolvedValue(client);
-  const registerHandlers = jest.fn();
-  const registerSignals = jest.fn();
   const validateConfiguration = jest.fn();
   await expect(
     startDiscordApplication({
       createClient,
       log,
-      registerHandlers,
-      registerSignals,
-      rootDir: "/repo",
       version: "9.0.0",
       validateConfiguration,
     }),
   ).resolves.toBe(client);
   expect(validateConfiguration).toHaveBeenCalledTimes(1);
-  expect(registerHandlers).toHaveBeenCalledWith({ log });
   expect(createClient).toHaveBeenCalledWith({
     log,
-    rootDir: "/repo",
     context: {
       version: "9.0.0",
       presence: { activities: [{ name: "discord-template v9.0.0", type: 4 }], status: "online" },
@@ -36,10 +29,9 @@ test("validates, starts Discord, and registers awaited client shutdown", async (
       GuildPresences: false,
       GuildVoiceStates: false,
     },
+    signals: true,
+    processHandlers: true,
   });
-  const { shutdownHook } = registerSignals.mock.calls[0][0];
-  await shutdownHook();
-  expect(client.shutdown).toHaveBeenCalledTimes(1);
 });
 
 test("does not start Discord when configuration validation fails", async () => {
@@ -48,9 +40,6 @@ test("does not start Discord when configuration validation fails", async () => {
     startDiscordApplication({
       createClient,
       log: {},
-      registerHandlers: jest.fn(),
-      registerSignals: jest.fn(),
-      rootDir: "/repo",
       version: "9.0.0",
       validateConfiguration: () => {
         throw new Error("invalid config");

@@ -1,21 +1,16 @@
 export async function startDiscordApplication({
   createClient,
   log,
-  registerHandlers,
-  registerSignals,
-  rootDir,
   version,
   validateConfiguration,
 }) {
   validateConfiguration();
-  registerHandlers({ log });
   const presence = {
     activities: [{ name: `discord-template v${version}`, type: 4 }],
     status: "online",
   };
-  const client = await createClient({
+  return createClient({
     log,
-    rootDir,
     context: { presence, version },
     intents: {
       Guilds: true,
@@ -25,7 +20,7 @@ export async function startDiscordApplication({
       GuildPresences: false,
       GuildVoiceStates: false,
     },
+    signals: true,
+    processHandlers: true,
   });
-  registerSignals({ log, shutdownHook: () => client.shutdown() });
-  return client;
 }

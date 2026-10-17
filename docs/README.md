@@ -38,9 +38,10 @@ The starter also includes a `!help` message handler. It needs the privileged Mes
 
 ## Start and stop
 
-Run `node bin/discord-template.mjs` to validate settings and connect to Discord. Live startup needs valid credentials and network access.
+Run `node bin/discord-template.mjs` from the app root to validate settings and connect to Discord. Live startup needs valid credentials and network access.
 
-The process calls `client.shutdown()` during shutdown. This method removes package handlers and destroys the client.
+The library adds signal and process handlers because this app has no other services to stop.
+The library calls `client.shutdown()` during shutdown. This method removes package handlers and destroys the client.
 Tests use mocks and local files. They do not connect to Discord.
 
 ## Container image
