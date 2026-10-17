@@ -3,7 +3,7 @@ import { startDiscordApplication } from "../src/application.mjs";
 
 test("validates, starts Discord, and registers awaited client shutdown", async () => {
   const log = {};
-  const client = { destroy: jest.fn().mockResolvedValue(undefined) };
+  const client = { shutdown: jest.fn().mockResolvedValue(undefined) };
   const createClient = jest.fn().mockResolvedValue(client);
   const registerHandlers = jest.fn();
   const registerSignals = jest.fn();
@@ -39,7 +39,7 @@ test("validates, starts Discord, and registers awaited client shutdown", async (
   });
   const { shutdownHook } = registerSignals.mock.calls[0][0];
   await shutdownHook();
-  expect(client.destroy).toHaveBeenCalledTimes(1);
+  expect(client.shutdown).toHaveBeenCalledTimes(1);
 });
 
 test("does not start Discord when configuration validation fails", async () => {

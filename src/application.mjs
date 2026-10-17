@@ -26,6 +26,6 @@ export async function startDiscordApplication({
       GuildVoiceStates: false,
     },
   });
-  registerSignals({ log, shutdownHook: () => client.destroy() });
+  registerSignals({ log, shutdownHook: () => client.shutdown() });
   return client;
 }
