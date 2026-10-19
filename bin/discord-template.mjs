@@ -3,7 +3,7 @@ import { readFileSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import "dotenv/config";
-import { createLogger } from "@eliware/log";
+import { createLogger } from "@eliware/common";
 import { createDiscord } from "@eliware/discord";
 import { startDiscordApplication } from "../src/application.mjs";
 import { validateDiscordConfiguration } from "../src/configuration.mjs";
