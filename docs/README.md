@@ -2,6 +2,8 @@
 
 Use this guide to create, configure, and run a Discord application from this template.
 
+> After you create a repository from this template, replace this document with end-user documentation for your repository.
+
 ## Create an application
 
 1. Create a repository from this template.
