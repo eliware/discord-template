@@ -1,4 +1,4 @@
-import { isStringCatalog } from "./catalog-shapes.mjs";
+import { isStringCatalog } from "./catalog/shape.mjs";
 
 export function validateLocaleKeys(catalogs) {
   const englishCatalog = catalogs.find(({ locale }) => locale === "en-US");
