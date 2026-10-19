@@ -1,5 +1,5 @@
 import { expect, jest, test } from "@jest/globals";
-import messageHelp from "../../src/commands/message-help.mjs";
+import messageHelp from "../../../src/commands/message/help.mjs";
 
 test("logs the help response", async () => {
   const log = { debug: jest.fn() };

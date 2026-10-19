@@ -5,10 +5,11 @@ import { helpDefinition as definition } from "../../../../test-fixtures/discord-
 test("reports unsupported localization keys", () => {
   const invalid = {
     ...definition,
-    name_localizations: { ...definition.name_localizations, xx: "help" },
+    name_localizations: { ...definition.name_localizations, xx: "help", bg: "" },
     description_localizations: { ...definition.description_localizations, xx: "Help" },
   };
   const errors = validateHelpLocalizations(invalid);
 
   expect(errors).toContain("unsupported localized locale: xx");
+  expect(errors).toContain("localized name is missing or invalid: bg");
 });
