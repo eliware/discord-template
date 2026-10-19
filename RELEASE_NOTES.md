@@ -1,10 +1,10 @@
 # Release Notes
 
-## 13.0.0 — 2026-10-17
+## 13.0.0 — 2026-10-19
 
 ### Changed
 
-- Set the template version to 13.0.0 and update the dotenv dependency.
+- Set the template version to 13.0.0 and update the dotenv, Discord, and test dependencies.
 - Use `@eliware/log` as a direct dependency.
 - Remove the `@eliware/common` dependency.
 - Configure the logger level with `LOG_LEVEL`.
@@ -26,6 +26,7 @@
 - Add tests for localized command names, interaction replies, event eligibility, locale inventories, and configuration failures.
 - Remove duplicate message routing coverage and keep integration tests with their workflow.
 - Align package guidance, user documentation, and specifications with v13 conventions.
+- Mark template documentation for replacement after scaffolding.
 - Use the canonical GHCR workflow to build and publish images with signed attestations.
 - Fetch full Git history in CI and use the shared workflow conventions.
 - Use the canonical Knit deployment settings.
