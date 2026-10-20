@@ -1,4 +1,4 @@
-version: "13.0"
+version: "14.0"
 description: Repository-specific Discord application requirements.
 directives:
   - id: E-1030.0

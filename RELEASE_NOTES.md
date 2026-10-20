@@ -1,14 +1,13 @@
 # Release Notes
 
-## 13.0.0 — 2026-10-19
+## 14.0.0 — 2026-10-20
 
 ### Changed
 
-- Set the template version to 13.0.0 and update the dotenv, Discord, and test dependencies.
-- Use `@eliware/log` as a direct dependency.
-- Remove the `@eliware/common` dependency.
-- Configure the logger level with `LOG_LEVEL`.
-- Use the library current-directory default for command, event, and locale folders.
+- Set the template package version to 14.0.0 and the local directive version to 14.0.
+- Update `@eliware/common` and `@eliware/discord` to their latest available releases.
+- Configure the logger with `LOG_LEVEL`, which defaults to `info`.
+- Use the Discord library current-directory default for command, event, and locale folders.
 - Use library signal and process handlers when the app has no other services to stop.
 - Call `client.shutdown()` during signal shutdown.
 - Validate Discord credentials, help command data, supported locale files, and locale keys before login.
@@ -22,18 +21,20 @@
 - Split credential, command, and locale configuration checks into focused modules.
 - Split locale file discovery, loading, catalog shape, key, and inventory checks into focused modules.
 - Pass file system operations to validators and use isolated test fixtures.
-- Mirror the source modules with focused tests under `tests/`.
+- Mirror source modules with focused tests under `tests/`.
 - Add tests for localized command names, interaction replies, event eligibility, locale inventories, and configuration failures.
 - Remove duplicate message routing coverage and keep integration tests with their workflow.
-- Align package guidance, user documentation, and specifications with v13 conventions.
+- Align package guidance, user documentation, and specifications with current conventions.
 - Mark template documentation for replacement after scaffolding.
 - Use the canonical GHCR workflow to build and publish images with signed attestations.
 - Fetch full Git history in CI and use the shared workflow conventions.
 - Use the canonical Knit deployment settings.
 - Run focused test commands during development.
 - Keep tests disconnected from Discord and keep credentials out of Git.
-- List supported locale catalogs and document published container image access.
+- List supported locale catalogs and document container image access.
 - Document the GitHub publication environment and app-owned shutdown pattern.
+- Add troubleshooting steps for credentials, slash commands, and the privileged Message Content intent.
+- Complete required AGENTS.md sections and remove empty README.md sections.
 
 ## 12.0.0 — 2026-10-12
 

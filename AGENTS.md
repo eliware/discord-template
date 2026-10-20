@@ -31,6 +31,8 @@ Keep credentials, secret values, private data, and runtime state out of Git.
 
 ## Changes
 
+Keep each document in the repository that owns its content. Update its nearest index when you add a document.
+
 ## Application
 
 Run focused tests first during development.
@@ -41,11 +43,13 @@ Run the full `npm test` suite for final validation before a commit, milestone, o
 
 ## Discord
 
+Keep command and event logic in src/. Keep the root commands/ and events/ folders as discovery adapters.
+
 ## GHCR publication
 
 Image: ghcr.io/eliware/discord-template
 
-Pull command: docker pull ghcr.io/eliware/discord-template:v13.0.0
+Pull command: docker pull ghcr.io/eliware/discord-template:v14.0.0
 
 Supported tags: vMAJOR.MINOR.PATCH
 

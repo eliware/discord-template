@@ -51,6 +51,12 @@ Run `npm test` before handoff. It runs the repository checks through `eliware-te
 
 ## Troubleshooting
 
+If the app cannot connect, verify `DISCORD_CLIENT_ID` and `DISCORD_TOKEN`. Confirm that the token matches the application.
+If `/help` does not appear, check that the bot invite includes the `applications.commands` scope.
+If `/help` cannot send a reply, grant View Channels and Send Messages.
+Enable the Message Content intent in `src/application.mjs` and the Discord Developer Portal to use `!help` in guilds.
+See the [Discord application guide](docs/README.md) for setup steps.
+
 ## Security
 
 Keep credentials, secrets, private data, and runtime state out of Git.
