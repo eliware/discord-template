@@ -1,6 +1,6 @@
 {
   "name": "@eliware/discord-template",
-  "version": "14.0.0",
+  "version": "15.0.0",
   "type": "module",
   "description": "A modern Discord app built with Node.js, based on the eliware/discord foundation.",
   "keywords": [
@@ -12,7 +12,12 @@
   ],
   "private": true,
   "main": "./bin/discord-template.mjs",
+  "bin": {
+    "discord-template": "bin/discord-template.mjs"
+  },
   "scripts": {
+    "start": "node bin/discord-template.mjs",
+    "locale:add": "node bin/add-locale-message-key.mjs",
     "test": "eliware-test",
     "lint": "eliware-test --lint",
     "audit": "eliware-test --audit",
@@ -23,12 +28,13 @@
     "node": ">=26"
   },
   "dependencies": {
-    "@eliware/common": "^13.0.0",
-    "@eliware/discord": "^13.0.0",
-    "dotenv": "^18.0.8"
+    "@eliware/discord": "^15.0.0",
+    "@eliware/log": "^15.0.0",
+    "discord.js": "^14.27.0",
+    "dotenv": "^18.0.9"
   },
   "devDependencies": {
-    "@eliware/test": "^13.0.0"
+    "@eliware/test": "^15.0.0"
   },
   "jest": {
     "testEnvironment": "node",

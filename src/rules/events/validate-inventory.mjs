@@ -1,21 +1,27 @@
-import { discordEvents } from "../../events/discord-events.mjs";
-import { join } from "node:path";
+export const requiredDiscordEvents = ["clientReady", "interactionCreate"];
 
-export async function validateEventInventory(directory, { readDirectory, loadHandler }) {
+export function validateEventInventory(directory, { readDirectory, sourceDirectory }) {
   const names = readDirectory(directory)
     .filter((file) => file.endsWith(".mjs"))
     .map((file) => file.slice(0, -4));
-  const errors = discordEvents
+  const sources = readDirectory(sourceDirectory)
+    .filter((file) => file.endsWith(".mjs"))
+    .map((file) => file.slice(0, -4));
+  const errors = requiredDiscordEvents
     .filter((name) => !names.includes(name))
-    .map((name) => `missing event: ${name}`);
+    .map((name) => `missing event adapter: ${name}`);
   errors.push(
-    ...names
-      .filter((name) => !discordEvents.includes(name))
-      .map((name) => `unknown event: ${name}`),
+    ...requiredDiscordEvents
+      .filter((name) => !sources.includes(name))
+      .map((name) => `missing event handler: ${name}`),
   );
   for (const name of names) {
-    const handler = await loadHandler(join(directory, `${name}.mjs`));
-    if (typeof handler.default !== "function") errors.push(`invalid event handler: ${name}`);
+    if (!sources.includes(name) && !requiredDiscordEvents.includes(name))
+      errors.push(`missing event handler: ${name}`);
+  }
+  for (const name of sources) {
+    if (!names.includes(name) && !requiredDiscordEvents.includes(name))
+      errors.push(`missing event adapter: ${name}`);
   }
   return errors;
 }

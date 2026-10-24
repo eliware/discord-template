@@ -1,18 +1,11 @@
 import { createLocalizedMessage } from "../interactions/create-localized-message.mjs";
-import { resolveInteractionHandler } from "./resolve-interaction-handler.mjs";
 
-export default async function (
-  { client, log, msg, commandHandlers, autocompleteHandlers, componentHandlers, ...contextData },
-  interaction,
-) {
-  const handler = resolveInteractionHandler(
-    { commandHandlers, autocompleteHandlers, componentHandlers },
+export default async function ({ client, log, msg, commandHandlers, ...contextData }, interaction) {
+  if (!interaction.isChatInputCommand()) return;
+  const handler = commandHandlers?.[interaction.commandName];
+  if (!handler) return;
+  await handler(
+    { client, log, msg: createLocalizedMessage(interaction, msg), ...contextData },
     interaction,
   );
-  if (handler) {
-    await handler(
-      { client, log, msg: createLocalizedMessage(interaction, msg, log), ...contextData },
-      interaction,
-    );
-  }
 }

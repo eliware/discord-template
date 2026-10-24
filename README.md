@@ -35,6 +35,7 @@ Use Node.js 26 or later and npm 12 or later for repository validation.
 
 Create a repository from this template. Replace the template name, description, URLs, keywords, and sample content.
 Run `npm ci` from the repository root.
+Copy `.env.example` to `.env`, then set `DISCORD_CLIENT_ID` and `DISCORD_TOKEN`.
 
 ## Usage
 
@@ -54,7 +55,6 @@ Run `npm test` before handoff. It runs the repository checks through `eliware-te
 If the app cannot connect, verify `DISCORD_CLIENT_ID` and `DISCORD_TOKEN`. Confirm that the token matches the application.
 If `/help` does not appear, check that the bot invite includes the `applications.commands` scope.
 If `/help` cannot send a reply, grant View Channels and Send Messages.
-Enable the Message Content intent in `src/application.mjs` and the Discord Developer Portal to use `!help` in guilds.
 See the [Discord application guide](docs/README.md) for setup steps.
 
 ## Security
@@ -70,22 +70,22 @@ Store credentials in an untracked `.env` file or an approved secret store.
 
 ## Operations
 
-Run `node bin/discord-template.mjs` from the app root to validate settings and connect to Discord.
+Live Discord connection: set credentials for an approved test bot in a test server before you run `npm start`.
+Run `npm start` from the repository root to validate settings and connect to Discord.
 Build a local image with `docker build -t discord-template .`.
 
 > **Template setup — update these values after you create a Discord application repository.**
 >
-> GHCR has a published `v12.0.0` image. [View available image tags](https://github.com/orgs/eliware/packages/container/discord-template).
-> The workflow builds `linux/amd64` images and publishes signed attestations. Configure the `ghcr-publish` GitHub environment for image publication.
-> Confirm supported architectures and image access. Update this section and the workflow when these values change.
+> Replace the example image tag after publication. Set image visibility and access before publication.
+> The workflow builds `linux/amd64` images. Confirm the supported architectures and who owns each build input.
+> Configure image publication and update this section before you publish an image.
 
-Deploy with an approved version tag and its recorded SHA-256 digest. Publication does not deploy the bot.
+Deploy with a published version tag and its recorded SHA-256 digest. Publication does not deploy the bot.
 
 ## Commands
 
-The starter registers the localized `/help` command. Its definition is `commands/help.json`. Its implementation is `src/commands/help.mjs`.
-
-The source also includes a `!help` message handler. It requires the privileged Message Content intent, which is disabled by default in `src/application.mjs`.
+The starter registers the localized `/help` command. Its definition is `commands/help.json`.
+Its implementation is `src/commands/help.mjs`. It returns a private reply to the person who invoked it.
 Keep the root `commands/` file as a discovery adapter. Update the definition and implementation together.
 
 ## Events
@@ -95,8 +95,7 @@ Keep the same keys in every locale file. Each event module must have a matching 
 
 ## Intents and permissions
 
-The client enables Guilds and GuildMessages. It disables MessageContent, GuildMembers, GuildPresences, and GuildVoiceStates. Enable MessageContent in `src/application.mjs` and in the Discord Developer Portal to use `!help` in guilds.
-The `/help` command needs channel view and message send permissions. Add access only when a command or event needs it.
+The client enables only the Guilds intent. The `/help` command needs channel view and message send permissions. Add access only when a command or event needs it.
 
 ## Support
 

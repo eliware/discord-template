@@ -2,6 +2,7 @@ export async function startDiscordApplication({
   createClient,
   log,
   version,
+  rootDir,
   validateConfiguration,
 }) {
   validateConfiguration();
@@ -11,14 +12,10 @@ export async function startDiscordApplication({
   };
   return createClient({
     log,
+    rootDir,
     context: { presence, version },
     intents: {
       Guilds: true,
-      GuildMessages: true,
-      MessageContent: false,
-      GuildMembers: false,
-      GuildPresences: false,
-      GuildVoiceStates: false,
     },
     signals: true,
     processHandlers: true,

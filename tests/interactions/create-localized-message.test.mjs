@@ -7,10 +7,9 @@ test.each([
   [{ guild: { preferredLocale: "es" } }, "es"],
   [{}, "en-US"],
 ])("uses the selected locale %s", (interaction, locale) => {
-  const log = {};
   const msg = jest.fn(() => "localized");
-  const localizedMessage = createLocalizedMessage(interaction, msg, log);
+  const localizedMessage = createLocalizedMessage(interaction, msg);
 
   expect(localizedMessage("help", "Help")).toBe("localized");
-  expect(msg).toHaveBeenCalledWith(locale, "help", "Help", log);
+  expect(msg).toHaveBeenCalledWith(locale, "help", "Help");
 });

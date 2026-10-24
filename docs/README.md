@@ -1,72 +1,118 @@
 # Discord application guide
 
-Use this guide to create, configure, and run a Discord application from this template.
+Use this guide to configure and run the starter application.
 
-> After you create a repository from this template, replace this document with end-user documentation for your repository.
+> After you create a repository from this template, replace this guide with end-user documentation for your application.
 
-## Create an application
+## Requirements
 
-1. Create a repository from this template.
-2. Set the package name, description, URLs, and keywords.
-3. Create a Discord application and bot in the Discord Developer Portal.
-4. Store the client ID and token in `.env` or an approved secret store.
-5. Keep `.env` out of Git.
+Use Node.js 26 or later. Use npm 12 or later to validate this repository.
+Create a Discord application and bot in the Discord Developer Portal.
 
-## Configure access
+## Install and configure
 
-Set `DISCORD_CLIENT_ID` and `DISCORD_TOKEN`. Set `LOG_LEVEL` only when needed. Its default is `info`.
-Use `error`, `warn`, `info`, `http`, `verbose`, `debug`, or `silly` for `LOG_LEVEL`.
+Run `npm ci` from the repository root to install the locked dependencies.
+Copy `.env.example` to `.env`. Set `DISCORD_CLIENT_ID` to the application ID.
+Set `DISCORD_TOKEN` to the bot token. Keep `.env` out of Git.
 
-Declare only the intents and permissions that the bot needs. Grant those permissions to the bot in each server. Keep the token secret.
+Set `LOG_LEVEL` to change the log level. The default is `info`.
+Use `error`, `warn`, `info`, `http`, `verbose`, `debug`, or `silly`.
 
-## Install the bot
+The application loads `.env` from the repository root. It uses the same root for configuration checks and Discord command, event, and locale files.
+
+## Invite the bot
 
 1. Open the application in the Discord Developer Portal.
 2. Open OAuth2, then URL Generator.
 3. Select `bot` and `applications.commands` under Scopes.
 4. Select View Channels and Send Messages under Bot Permissions.
 5. Copy the generated URL and open it in a browser.
-6. Select the server, then authorize the bot.
+6. Select a test server, then authorize the test bot.
 
-These scopes make `/help` available and add the bot to a server. These permissions let `/help` reply in a channel.
+The `applications.commands` scope makes `/help` available.
+View Channels and Send Messages allow the bot to reply.
 Do not grant Administrator for this template.
 
-## Commands and events
+## Commands
 
-Put command and event logic under `src/`. Keep root `commands/` and `events/` as discovery adapters for `@eliware/discord`.
+The starter registers the localized `/help` command.
+It returns a private reply to the person who invokes it.
+The definition is in `commands/help.json`.
+The adapter is in `commands/help.mjs`.
+The handler is in `src/commands/help.mjs`.
 
-Add command definitions and locale text in their indexed data files. Validate all command definitions and supported locale files before client startup. Keep the same command keys in every supported locale.
+Keep the command name in the JSON file, adapter, and handler aligned.
+Update the localized name and description when you change the command.
 
-The starter includes these locale catalogs: `bg`, `cs`, `da`, `de`, `el`, `en-GB`, `en-US`, `es-419`, `es-ES`, `fi`, `fr`, `hi`, `hr`, `hu`, `id`, `it`, `ja`, `ko`, `lt`, `nl`, `no`, `pl`, `pt-BR`, `ro`, `ru`, `sv-SE`, `th`, `tr`, `uk`, `vi`, `zh-CN`, and `zh-TW`.
-Keep each catalog in `locales/`. Use the same message keys in every catalog.
+## Events
 
-The starter also includes a `!help` message handler. It needs the privileged Message Content intent. The template disables this intent by default. Enable it in `src/application.mjs` and in the Discord Developer Portal to use `!help` in guilds.
+The `clientReady` event logs the bot identity and applies the configured status.
+The `interactionCreate` event sends slash commands to their app handlers.
+Keep the event adapters in `events/`.
+Keep event code in matching files under `src/events/`.
+Add an event only when the application needs it.
+
+## Locales
+
+A locale is a language and region code used for translated messages.
+The starter includes 32 locale files under `locales/`.
+
+The command definition and each locale file use the same supported locale list.
+Keep each file's message keys aligned with `locales/en-US.json`.
+
+Run `npm run locale:add -- welcome "Welcome"` to add a key to every locale catalog.
+The command preserves existing translations and fills missing values with the English message.
+Translate new values after the command runs.
+Run `npm test` after you change locale data.
+
+## Intents and permissions
+
+The starter enables only the Guilds intent.
+It does not enable privileged intents.
+The `/help` command needs View Channels and Send Messages permissions.
+Add an intent or permission only when app behavior needs it.
+Enable privileged intents in the Developer Portal when Discord requires them.
 
 ## Start and stop
 
-Run `node bin/discord-template.mjs` from the app root to validate settings and connect to Discord. Live startup needs valid credentials and network access.
+This command connects the configured test bot to Discord.
+Before you run this command, ask the test server owner to add the bot.
 
-The app enables the library signal and process handlers because it has no other services to stop.
-The library calls `client.shutdown()` during shutdown. This method removes package handlers and destroys the client.
-Tests use mocks and local files. They do not connect to Discord.
+```sh
+npm start
+```
 
-If the app adds other services, set `signals` to `false` and use one app shutdown coordinator.
-Stop app services, then call `client.shutdown()` from that coordinator.
-Connect the same coordinator to signal and manual shutdown.
-Read the discord package lifecycle guide for shutdown details.
+The command loads `.env`, validates credentials and app files, then connects the bot.
+The app root comes from the entry point path, so the command can start from any working directory.
+The library handles process errors and shutdown signals for this Discord-only app.
+It calls `client.shutdown()` during shutdown.
+
+If the application adds other services, use one app-owned shutdown coordinator.
+Stop app services before the coordinator calls `client.shutdown()`.
+Use that coordinator for signal and manual shutdown.
+Read the `@eliware/discord` lifecycle guide for details.
 
 ## Container image
 
 Build a local image with `docker build -t discord-template .`.
+The Dockerfile runs the app as the unprivileged `node` user.
+Pass credentials through an approved runtime secret store.
+Do not copy `.env` into the image.
 
-> **Template setup — update these values after you create a Discord application repository.**
->
-> GHCR has a published `v12.0.0` image. Check the container package page linked in the root README for available image tags.
-> The workflow builds `linux/amd64` images and publishes signed attestations. Configure the `ghcr-publish` GitHub environment for image publication.
-> Confirm supported architectures and image access. Update the README and workflow when these values change.
+> Replace the example image tag after publication. Set image visibility and access before publication.
+> The workflow builds `linux/amd64` images. Confirm the supported architectures and the owner of each build input.
+> Configure publication and replace this callout after you publish an image.
 
-Use a released version tag and its recorded SHA-256 digest for deployment. Publication does not deploy the bot. Use an approved deployment process.
+## Troubleshooting
+
+If startup reports a missing application ID, set `DISCORD_CLIENT_ID` in the root `.env` file.
+If startup reports a missing token, set `DISCORD_TOKEN` in the root `.env` file.
+If `/help` does not appear, check the `applications.commands` scope and bot authorization.
+If `/help` cannot reply, grant View Channels and Send Messages.
+If a locale check fails, compare its message keys with `locales/en-US.json`.
+If a command check fails, compare its definition, adapter, handler, and locale fields.
 
 ## Validate
 
-Run `npm test` before handoff. It checks tests, lint, formatting, audit, locale data, and applicable profile rules.
+Run `npm test` to check tests, lint, formatting, dependency audit, locale data, and repository profiles.
+The tests use mocks and local files. They do not connect to Discord.
