@@ -1,12 +1,12 @@
 # Release Notes
 
-## 15.0.0 — 2026-10-24
+## 15.0.0 — 2026-10-25
 
 ### Added
 
 - Add an `npm start` command for the starter application.
 - Load `.env` from the resolved repository root and use that root for validation and Discord file discovery.
-- Add a locale command that marks untranslated messages and preserves existing translations.
+- Add a locale command that marks untranslated messages, preserves valid translations, and repairs empty or non-string values.
 - Add a private localized reply to the `/help` command.
 - Validate `LOG_LEVEL` and require a test server ID and permission confirmation before startup.
 - Add focused tests for app root selection, slash command routing, locale updates, and required event adapters.
@@ -16,16 +16,17 @@
 ### Changed
 
 - Set the template package version to 15.0.0 and the local directive version to 15.0.
-- Update `@eliware/discord`, `@eliware/log`, and `@eliware/test` to version 15.
+- Update `@eliware/discord`, `@eliware/common`, and `@eliware/test` to version 15.
 - Update `discord.js` and `dotenv` to current compatible releases.
-- Remove the direct `@eliware/common` dependency and create the logger with `@eliware/log`.
+- Use shared logging utilities from `@eliware/common`.
 - Use the supported `MessageFlags.Ephemeral` constant for private replies.
 - Enable only the Guilds intent in the default app.
 - Keep `clientReady` and `interactionCreate` as the default event adapters.
 - Remove the default message handler and event placeholders that the starter does not use.
 - Keep event adapters in `events/` and event behavior in matching `src/events/` modules.
 - Refine command, credential, locale, and event inventory validation into focused modules.
-- Use the same locale keys in all supported catalogs and add a helper for new keys.
+- Use the same locale keys in supported catalogs. Skip unsupported catalogs when adding a key.
+- Replace empty or non-string values for the requested locale key.
 - Use the canonical GitHub Container Registry workflow and current shared validation workflow.
 - Align repository guidance, specifications, release notes, and user documentation with v15 conventions.
 - Keep tests isolated from Discord and credentials.
