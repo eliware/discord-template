@@ -12,8 +12,12 @@ function createFileSystem(catalogs) {
   };
 }
 
-test("adds a message key to each locale catalog", () => {
-  const catalogs = { "en-US.json": '{"help":"Help"}', "fr.json": '{"help":"Aide"}' };
+test("adds a message key to each supported locale catalog", () => {
+  const catalogs = {
+    "en-US.json": '{"help":"Help"}',
+    "fr.json": '{"help":"Aide"}',
+    "unsupported.json": '{"help":"Help"}',
+  };
   const fileSystem = createFileSystem(catalogs);
 
   expect(addMessageKey("/locales", "about", "About", fileSystem)).toBe(2);
@@ -22,6 +26,7 @@ test("adds a message key to each locale catalog", () => {
     help: "Aide",
     about: "[TRANSLATE: About]",
   });
+  expect(catalogs["unsupported.json"]).toBe('{"help":"Help"}');
 });
 
 test("preserves translated values when a locale already has the key", () => {

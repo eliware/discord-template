@@ -66,13 +66,13 @@ Use only approved secret stores for secret values.
 
 Set these values in an untracked `.env` file or an approved secret store.
 
-| Variable                         | Default | Required | Purpose                                                                            |
-| -------------------------------- | ------- | -------- | ---------------------------------------------------------------------------------- |
-| `DISCORD_CLIENT_ID`              | None    | Yes      | Application ID for the test bot.                                                   |
-| `DISCORD_TOKEN`                  | None    | Yes      | Token for the test bot.                                                            |
-| `DISCORD_TEST_SERVER_ID`         | None    | Yes      | Numeric ID for the test server.                                                    |
-| `DISCORD_TEST_SERVER_AUTHORIZED` | `false` | Yes      | Set to `true` after the server owner gives permission to add the test bot.         |
-| `LOG_LEVEL`                      | `info`  | No       | Logger level. Use `error`, `warn`, `info`, `http`, `verbose`, `debug`, or `silly`. |
+| Variable                         | Default | Required | Purpose                                                                               |
+| -------------------------------- | ------- | -------- | ------------------------------------------------------------------------------------- |
+| `DISCORD_CLIENT_ID`              | None    | Yes      | Application ID for the test bot.                                                      |
+| `DISCORD_TOKEN`                  | None    | Yes      | Token for the test bot.                                                               |
+| `DISCORD_TEST_SERVER_ID`         | None    | Yes      | Numeric ID for the test server.                                                       |
+| `DISCORD_TEST_SERVER_AUTHORIZED` | None    | Yes      | Set to `true` only after the server owner gives permission. The example uses `false`. |
+| `LOG_LEVEL`                      | `info`  | No       | Logger level. Use `error`, `warn`, `info`, `http`, `verbose`, `debug`, or `silly`.    |
 
 ## Operations
 

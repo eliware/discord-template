@@ -1,4 +1,5 @@
 import { join } from "node:path";
+import { supportedLocales } from "./supported-locales.mjs";
 
 export function addMessageKey(localeDirectory, key, message, fileSystem) {
   if (typeof key !== "string" || !key.trim())
@@ -7,7 +8,9 @@ export function addMessageKey(localeDirectory, key, message, fileSystem) {
     throw new TypeError("message must be a non-empty string.");
 
   let updated = 0;
-  const files = fileSystem.readdirSync(localeDirectory).filter((file) => file.endsWith(".json"));
+  const files = fileSystem
+    .readdirSync(localeDirectory)
+    .filter((file) => file.endsWith(".json") && supportedLocales.includes(file.slice(0, -5)));
   for (const file of files) {
     const path = join(localeDirectory, file);
     const catalog = JSON.parse(fileSystem.readFileSync(path, "utf8"));
