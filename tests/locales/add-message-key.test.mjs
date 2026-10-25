@@ -42,6 +42,18 @@ test("preserves translated values when a locale already has the key", () => {
   expect(fileSystem.writeFileSync).toHaveBeenCalledTimes(1);
 });
 
+test("replaces empty or non-string values for the requested key", () => {
+  const catalogs = {
+    "en-US.json": '{"about":""}',
+    "fr.json": '{"about":42}',
+  };
+  const fileSystem = createFileSystem(catalogs);
+
+  expect(addMessageKey("/locales", "about", "About", fileSystem)).toBe(2);
+  expect(JSON.parse(catalogs["en-US.json"]).about).toBe("About");
+  expect(JSON.parse(catalogs["fr.json"]).about).toBe("[TRANSLATE: About]");
+});
+
 test("rejects an empty key or message", () => {
   const fileSystem = createFileSystem({});
   expect(() => addMessageKey("/locales", " ", "Text", fileSystem)).toThrow(

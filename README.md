@@ -70,9 +70,11 @@ Set these values in an untracked `.env` file or an approved secret store.
 | -------------------------------- | ------- | -------- | ------------------------------------------------------------------------------------- |
 | `DISCORD_CLIENT_ID`              | None    | Yes      | Application ID for the test bot.                                                      |
 | `DISCORD_TOKEN`                  | None    | Yes      | Token for the test bot.                                                               |
-| `DISCORD_TEST_SERVER_ID`         | None    | Yes      | Numeric ID for the test server.                                                       |
+| `DISCORD_TEST_SERVER_ID`         | None    | Yes      | 17 to 20 digit ID for the test server.                                                |
 | `DISCORD_TEST_SERVER_AUTHORIZED` | None    | Yes      | Set to `true` only after the server owner gives permission. The example uses `false`. |
-| `LOG_LEVEL`                      | `info`  | No       | Logger level. Use `error`, `warn`, `info`, `http`, `verbose`, `debug`, or `silly`.    |
+| `LOG_LEVEL`                      | `info`  | No       | Supported values: `error`, `warn`, `info`, `http`, `verbose`, `debug`, and `silly`.   |
+
+The app rejects unsupported `LOG_LEVEL` values before startup.
 
 ## Operations
 

@@ -14,7 +14,7 @@ export function addMessageKey(localeDirectory, key, message, fileSystem) {
   for (const file of files) {
     const path = join(localeDirectory, file);
     const catalog = JSON.parse(fileSystem.readFileSync(path, "utf8"));
-    if (Object.hasOwn(catalog, key)) continue;
+    if (typeof catalog[key] === "string" && catalog[key].trim()) continue;
     catalog[key] = file === "en-US.json" ? message : `[TRANSLATE: ${message}]`;
     fileSystem.writeFileSync(path, `${JSON.stringify(catalog, null, 2)}\n`);
     updated += 1;
