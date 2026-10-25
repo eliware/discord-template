@@ -18,19 +18,22 @@ test("adds a message key to each locale catalog", () => {
 
   expect(addMessageKey("/locales", "about", "About", fileSystem)).toBe(2);
   expect(JSON.parse(catalogs["en-US.json"])).toEqual({ help: "Help", about: "About" });
-  expect(JSON.parse(catalogs["fr.json"])).toEqual({ help: "Aide", about: "About" });
+  expect(JSON.parse(catalogs["fr.json"])).toEqual({
+    help: "Aide",
+    about: "[TRANSLATE: About]",
+  });
 });
 
 test("preserves translated values when a locale already has the key", () => {
   const catalogs = {
-    "en-US.json": '{"help":"Help","about":"About"}',
-    "fr.json": '{"help":"Aide"}',
+    "en-US.json": '{"help":"Help"}',
+    "fr.json": '{"help":"Aide","about":"À propos"}',
   };
   const fileSystem = createFileSystem(catalogs);
 
   expect(addMessageKey("/locales", "about", "About", fileSystem)).toBe(1);
   expect(JSON.parse(catalogs["en-US.json"]).about).toBe("About");
-  expect(JSON.parse(catalogs["fr.json"]).about).toBe("About");
+  expect(JSON.parse(catalogs["fr.json"]).about).toBe("À propos");
   expect(fileSystem.writeFileSync).toHaveBeenCalledTimes(1);
 });
 

@@ -6,7 +6,7 @@
 
 - Add an `npm start` command for the starter application.
 - Load `.env` from the resolved repository root and use that root for validation and Discord file discovery.
-- Add a locale command that adds new message keys without replacing existing translations.
+- Add a locale command that marks untranslated messages and preserves existing translations.
 - Add a private localized reply to the `/help` command.
 - Add focused tests for app root selection, slash command routing, locale updates, and required event adapters.
 - Document Discord setup, bot access, startup, shutdown, locale updates, container use, and troubleshooting.

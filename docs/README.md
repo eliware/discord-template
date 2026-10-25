@@ -61,8 +61,9 @@ The command definition and each locale file use the same supported locale list.
 Keep each file's message keys aligned with `locales/en-US.json`.
 
 Run `npm run locale:add -- welcome "Welcome"` to add a key to every locale catalog.
-The command preserves existing translations and fills missing values with the English message.
-Translate new values after the command runs.
+The command keeps existing translations and adds the English message to `en-US.json`.
+It marks each other missing value with `[TRANSLATE: Welcome]`.
+Replace each marker with a translation after the command runs.
 Run `npm test` after you change locale data.
 
 ## Intents and permissions
