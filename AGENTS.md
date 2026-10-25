@@ -53,4 +53,10 @@ Pull command: docker pull ghcr.io/eliware/discord-template:v15.0.0
 
 Supported tags: vMAJOR.MINOR.PATCH
 
+Image visibility: [public or private before publication]
+
+Accounts with pull access: [list users and teams, or state that anyone can pull a public image]
+
+Publisher access: GITHUB_TOKEN with packages: write can publish. It does not set pull access.
+
 Deployment boundary: Publication does not deploy. Use an immutable version tag and record its SHA-256 digest.

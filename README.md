@@ -64,23 +64,40 @@ Use only approved secret stores for secret values.
 
 ## Configuration
 
-Set `DISCORD_CLIENT_ID` and `DISCORD_TOKEN` before startup. Set `LOG_LEVEL` to configure the logger.
-It defaults to `info`. Use `error`, `warn`, `info`, `http`, `verbose`, `debug`, or `silly`.
-Store credentials in an untracked `.env` file or an approved secret store.
+Set these values in an untracked `.env` file or an approved secret store.
+
+| Variable                         | Default | Required | Purpose                                                                            |
+| -------------------------------- | ------- | -------- | ---------------------------------------------------------------------------------- |
+| `DISCORD_CLIENT_ID`              | None    | Yes      | Application ID for the test bot.                                                   |
+| `DISCORD_TOKEN`                  | None    | Yes      | Token for the test bot.                                                            |
+| `DISCORD_TEST_SERVER_ID`         | None    | Yes      | Numeric ID for the test server.                                                    |
+| `DISCORD_TEST_SERVER_AUTHORIZED` | `false` | Yes      | Set to `true` after the server owner gives permission to add the test bot.         |
+| `LOG_LEVEL`                      | `info`  | No       | Logger level. Use `error`, `warn`, `info`, `http`, `verbose`, `debug`, or `silly`. |
 
 ## Operations
 
-Live Discord connection: set credentials for an approved test bot in a test server before you run `npm start`.
-Run `npm start` from the repository root to validate settings and connect to Discord.
+Live Discord connection: `npm start` connects `<test bot>` to `<test server>`.
+Use credentials for a test bot. Set the numeric ID for the test server.
+Ask the server owner for permission before you add the bot. Set `DISCORD_TEST_SERVER_AUTHORIZED=true` only after the owner says yes.
+
+The app checks the server ID format and permission confirmation before it connects.
+It cannot verify the selected bot or server.
+
+Run `npm start` from the repository root to validate configuration and connect to Discord.
 Build a local image with `docker build -t discord-template .`.
 
 > **Template setup — update these values after you create a Discord application repository.**
 >
-> Replace the example image tag after publication. Set image visibility and access before publication.
-> The workflow builds `linux/amd64` images. Confirm the supported architectures and who owns each build input.
-> Configure image publication and update this section before you publish an image.
+> Image purpose: runs this starter Discord app.
+> Image visibility: [public or private before publication].
+> Accounts with pull access: [list users and teams, or state that anyone can pull a public image].
+>
+> The workflow uses `GITHUB_TOKEN` with `packages: write` to publish. This does not set image visibility or pull access.
+> The workflow builds `linux/amd64` images. Confirm the supported architecture and the owner of each build input.
+> Replace these placeholders after you create a Discord application repository.
 
-Deploy with a published version tag and its recorded SHA-256 digest. Publication does not deploy the bot.
+Deploy with a published version tag and its recorded SHA-256 digest.
+Publication does not deploy the bot.
 
 ## Commands
 

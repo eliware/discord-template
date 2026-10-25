@@ -8,8 +8,10 @@
 - Load `.env` from the resolved repository root and use that root for validation and Discord file discovery.
 - Add a locale command that marks untranslated messages and preserves existing translations.
 - Add a private localized reply to the `/help` command.
+- Validate `LOG_LEVEL` and require a test server ID and permission confirmation before startup.
 - Add focused tests for app root selection, slash command routing, locale updates, and required event adapters.
 - Document Discord setup, bot access, startup, shutdown, locale updates, container use, and troubleshooting.
+- Document image visibility, pull access, test targets, and server permission requirements as setup values.
 
 ### Changed
 

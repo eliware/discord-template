@@ -14,6 +14,10 @@ directives:
       - Add optional event adapters only when the application uses them.
       - Use only the Guilds intent for the default slash command application.
       - Provide a command that adds a message key to locale catalogs without replacing translations.
+      - Validate LOG_LEVEL before creating the logger.
+      - Require a numeric test server ID and permission confirmation before a Discord connection.
+      - Document the image visibility and accounts with pull access as template placeholders.
     donts:
       - Do not move discovery folders, connect to Discord in tests, or commit credentials.
       - Do not enable privileged gateway intents in the default application.
+      - Do not connect when the test server ID or permission confirmation is missing.

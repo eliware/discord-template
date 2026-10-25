@@ -8,11 +8,12 @@ import { createDiscord } from "@eliware/discord";
 import { startDiscordApplication } from "../src/application.mjs";
 import { validateDiscordConfiguration } from "../src/configuration.mjs";
 import { loadApplicationEnvironment } from "../src/load-environment.mjs";
+import { resolveLogLevel } from "../src/configuration/log-level.mjs";
 
 const rootDir = dirname(dirname(fileURLToPath(import.meta.url)));
 loadApplicationEnvironment(rootDir, dotenv.config);
 const { version } = JSON.parse(readFileSync(join(rootDir, "package.json"), "utf8"));
-const log = createLogger({ level: process.env.LOG_LEVEL ?? "info" });
+const log = createLogger({ level: resolveLogLevel(process.env.LOG_LEVEL) });
 await startDiscordApplication({
   createClient: createDiscord,
   log,

@@ -13,10 +13,15 @@ Create a Discord application and bot in the Discord Developer Portal.
 
 Run `npm ci` from the repository root to install the locked dependencies.
 Copy `.env.example` to `.env`. Set `DISCORD_CLIENT_ID` to the application ID.
-Set `DISCORD_TOKEN` to the bot token. Keep `.env` out of Git.
+Set `DISCORD_TOKEN` to the test bot token. Keep `.env` out of Git.
+
+Set `DISCORD_TEST_SERVER_ID` to the 17 to 20 digit ID for the test server.
+Ask the test server owner for permission to add the bot.
+Set `DISCORD_TEST_SERVER_AUTHORIZED=true` only after the owner gives permission.
 
 Set `LOG_LEVEL` to change the log level. The default is `info`.
 Use `error`, `warn`, `info`, `http`, `verbose`, `debug`, or `silly`.
+The app rejects an unsupported log level before it creates the logger.
 
 The application loads `.env` from the repository root. It uses the same root for configuration checks and Discord command, event, and locale files.
 
@@ -27,7 +32,7 @@ The application loads `.env` from the repository root. It uses the same root for
 3. Select `bot` and `applications.commands` under Scopes.
 4. Select View Channels and Send Messages under Bot Permissions.
 5. Copy the generated URL and open it in a browser.
-6. Select a test server, then authorize the test bot.
+6. Select the test server, then add the test bot after the owner gives permission.
 
 The `applications.commands` scope makes `/help` available.
 View Channels and Send Messages allow the bot to reply.
@@ -76,14 +81,17 @@ Enable privileged intents in the Developer Portal when Discord requires them.
 
 ## Start and stop
 
-This command connects the configured test bot to Discord.
-Before you run this command, ask the test server owner to add the bot.
+Live Discord connection: this command connects `<test bot>` to `<test server>`.
+Before you run it, set the test bot credentials and test server ID.
+Ask the server owner for permission to add the bot.
+Set `DISCORD_TEST_SERVER_AUTHORIZED=true` only after the owner gives permission.
 
 ```sh
 npm start
 ```
 
-The command loads `.env`, validates credentials and app files, then connects the bot.
+The command loads `.env` and checks credentials, the test server ID, permission confirmation, and app files before it connects.
+The app cannot verify the selected bot or server. Use only a test bot and a test server.
 The app root comes from the entry point path, so the command can start from any working directory.
 The library handles process errors and shutdown signals for this Discord-only app.
 It calls `client.shutdown()` during shutdown.
@@ -100,9 +108,13 @@ The Dockerfile runs the app as the unprivileged `node` user.
 Pass credentials through an approved runtime secret store.
 Do not copy `.env` into the image.
 
-> Replace the example image tag after publication. Set image visibility and access before publication.
-> The workflow builds `linux/amd64` images. Confirm the supported architectures and the owner of each build input.
-> Configure publication and replace this callout after you publish an image.
+> Image purpose: runs this starter Discord app.
+> Image visibility: [public or private before publication].
+> Accounts with pull access: [list users and teams, or state that anyone can pull a public image].
+>
+> The workflow uses `GITHUB_TOKEN` with `packages: write` to publish. This does not set image visibility or pull access.
+> The workflow builds `linux/amd64` images. Confirm the supported architecture and the owner of each build input.
+> Replace these placeholders after you create a Discord application repository.
 
 ## Troubleshooting
 
