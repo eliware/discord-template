@@ -1,6 +1,7 @@
 import { join } from "node:path";
 import helpDefinition from "../commands/help.json" with { type: "json" };
-import { createFileSystem } from "./filesystem.mjs";
+import { createDirectoryReader } from "./filesystem/directory-reader.mjs";
+import { createFileReader } from "./filesystem/file-reader.mjs";
 import { localeCatalogs } from "./locale-catalogs.mjs";
 
 export { helpDefinition };
@@ -23,14 +24,16 @@ export function createDiscordConfigurationFileSystem({
       ]),
     ),
   };
-  const fileSystem = createFileSystem({
-    files,
-    directories: {
-      [localeDirectory]: Object.keys(localeFiles).map((name) =>
-        name.endsWith(".json") ? name : `${name}.json`,
-      ),
-    },
-  });
+  const fileSystem = {
+    ...createFileReader({ files }),
+    ...createDirectoryReader({
+      directories: {
+        [localeDirectory]: Object.keys(localeFiles).map((name) =>
+          name.endsWith(".json") ? name : `${name}.json`,
+        ),
+      },
+    }),
+  };
 
   return { rootDirectory, localeDirectory, fileSystem };
 }

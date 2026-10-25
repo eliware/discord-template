@@ -1,11 +1,11 @@
 import { join } from "node:path";
 import { expect, test } from "@jest/globals";
 import { loadLocaleCatalogs } from "../../src/locales/load-locale-catalogs.mjs";
-import { createFileSystem } from "../../test-fixtures/filesystem.mjs";
+import { createFileReader } from "../../test-fixtures/filesystem/file-reader.mjs";
 
 test("loads parsed catalogs and reports invalid JSON files", () => {
   const directory = "/locales";
-  const fileSystem = createFileSystem({
+  const fileSystem = createFileReader({
     files: {
       [join(directory, "en-US.json")]: JSON.stringify({ help: "Help" }),
       [join(directory, "fr.json")]: "{",
