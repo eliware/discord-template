@@ -49,7 +49,7 @@ Keep command and event logic in src/. Keep the root commands/ and events/ folder
 
 Image: ghcr.io/eliware/discord-template
 
-Pull command: docker pull ghcr.io/eliware/discord-template:v15.0.0
+Pull command: docker pull ghcr.io/eliware/discord-template:v15.0.1
 
 Supported tags: vMAJOR.MINOR.PATCH
 

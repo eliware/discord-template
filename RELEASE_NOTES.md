@@ -1,5 +1,14 @@
 # Release Notes
 
+## 15.0.1 — 2026-10-26
+
+### Changed
+
+- Update the template package to version 15.0.1.
+- Update `@eliware/common`, `@eliware/discord`, and `@eliware/test` to version 15.0.1 and refresh the locked dependency tree.
+- Validate every supported locale catalog before writing any catalog when adding a message key.
+- Update the GHCR pull command in `AGENTS.md` to use the 15.0.1 image tag.
+
 ## 15.0.0 — 2026-10-25
 
 ### Added

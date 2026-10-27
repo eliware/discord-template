@@ -7,17 +7,19 @@ export function addMessageKey(localeDirectory, key, message, fileSystem) {
   if (typeof message !== "string" || !message.trim())
     throw new TypeError("message must be a non-empty string.");
 
-  let updated = 0;
   const files = fileSystem
     .readdirSync(localeDirectory)
     .filter((file) => file.endsWith(".json") && supportedLocales.includes(file.slice(0, -5)));
-  for (const file of files) {
-    const path = join(localeDirectory, file);
-    const catalog = JSON.parse(fileSystem.readFileSync(path, "utf8"));
-    if (typeof catalog[key] === "string" && catalog[key].trim()) continue;
+  const catalogs = files.map((file) => ({
+    file,
+    catalog: JSON.parse(fileSystem.readFileSync(join(localeDirectory, file), "utf8")),
+  }));
+  const updates = catalogs.filter(({ catalog }) => {
+    return typeof catalog[key] !== "string" || !catalog[key].trim();
+  });
+  for (const { file, catalog } of updates) {
     catalog[key] = file === "en-US.json" ? message : `[TRANSLATE: ${message}]`;
-    fileSystem.writeFileSync(path, `${JSON.stringify(catalog, null, 2)}\n`);
-    updated += 1;
+    fileSystem.writeFileSync(join(localeDirectory, file), `${JSON.stringify(catalog, null, 2)}\n`);
   }
-  return updated;
+  return updates.length;
 }

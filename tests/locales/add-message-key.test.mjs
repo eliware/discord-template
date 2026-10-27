@@ -63,3 +63,15 @@ test("rejects an empty key or message", () => {
     "message must be a non-empty string.",
   );
 });
+
+test("does not update catalogs when a supported catalog contains invalid JSON", () => {
+  const catalogs = {
+    "en-US.json": '{"help":"Help"}',
+    "fr.json": "{invalid",
+  };
+  const fileSystem = createFileSystem(catalogs);
+
+  expect(() => addMessageKey("/locales", "about", "About", fileSystem)).toThrow();
+  expect(fileSystem.writeFileSync).not.toHaveBeenCalled();
+  expect(catalogs["en-US.json"]).toBe('{"help":"Help"}');
+});
