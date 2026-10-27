@@ -42,16 +42,19 @@ test("preserves translated values when a locale already has the key", () => {
   expect(fileSystem.writeFileSync).toHaveBeenCalledTimes(1);
 });
 
-test("replaces empty or non-string values for the requested key", () => {
+test("replaces an empty value and adds a missing translation", () => {
   const catalogs = {
     "en-US.json": '{"about":""}',
-    "fr.json": '{"about":42}',
+    "fr.json": '{"help":"Aide"}',
   };
   const fileSystem = createFileSystem(catalogs);
 
   expect(addMessageKey("/locales", "about", "About", fileSystem)).toBe(2);
   expect(JSON.parse(catalogs["en-US.json"]).about).toBe("About");
-  expect(JSON.parse(catalogs["fr.json"]).about).toBe("[TRANSLATE: About]");
+  expect(JSON.parse(catalogs["fr.json"])).toEqual({
+    help: "Aide",
+    about: "[TRANSLATE: About]",
+  });
 });
 
 test("rejects an empty key or message", () => {
@@ -75,3 +78,21 @@ test("does not update catalogs when a supported catalog contains invalid JSON", 
   expect(fileSystem.writeFileSync).not.toHaveBeenCalled();
   expect(catalogs["en-US.json"]).toBe('{"help":"Help"}');
 });
+
+test.each(["[]", '{"about":42}', '{"help":42}', "null", '"text"'])(
+  "does not update catalogs when a supported catalog is not a string map: %s",
+  (invalidCatalog) => {
+    const catalogs = {
+      "en-US.json": '{"help":"Help"}',
+      "fr.json": invalidCatalog,
+    };
+    const fileSystem = createFileSystem(catalogs);
+
+    expect(() => addMessageKey("/locales", "about", "About", fileSystem)).toThrow(
+      "invalid locale catalog: fr.json",
+    );
+    expect(fileSystem.writeFileSync).not.toHaveBeenCalled();
+    expect(catalogs["en-US.json"]).toBe('{"help":"Help"}');
+    expect(catalogs["fr.json"]).toBe(invalidCatalog);
+  },
+);

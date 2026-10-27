@@ -1,5 +1,6 @@
 import { join } from "node:path";
 import { supportedLocales } from "./supported-locales.mjs";
+import { validateLocaleCatalogShapes } from "./validate/catalog/shapes.mjs";
 
 export function addMessageKey(localeDirectory, key, message, fileSystem) {
   if (typeof key !== "string" || !key.trim())
@@ -14,6 +15,11 @@ export function addMessageKey(localeDirectory, key, message, fileSystem) {
     file,
     catalog: JSON.parse(fileSystem.readFileSync(join(localeDirectory, file), "utf8")),
   }));
+  const validationErrors = validateLocaleCatalogShapes(
+    catalogs.map(({ file, catalog }) => ({ file, values: catalog })),
+  );
+  if (validationErrors.length) throw new TypeError(validationErrors.join("\n"));
+
   const updates = catalogs.filter(({ catalog }) => {
     return typeof catalog[key] !== "string" || !catalog[key].trim();
   });
