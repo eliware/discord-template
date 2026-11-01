@@ -6,24 +6,31 @@ Use this guide to configure and run the starter application.
 
 ## Requirements
 
-Use Node.js 26 or later. Use npm 12 or later to validate this repository.
+Use Node.js 26 or later to run the app. Use npm 12 or later for repository validation.
 Create a Discord application and bot in the Discord Developer Portal.
 
-## Install and configure
+## Configuration
 
 Run `npm ci` from the repository root to install the locked dependencies.
-Copy `.env.example` to `.env`. Set `DISCORD_CLIENT_ID` to the application ID.
-Set `DISCORD_TOKEN` to the test bot token. Keep `.env` out of Git.
+Copy `.env.example` to `.env`. Keep `.env` out of Git.
 
+Set `DISCORD_CLIENT_ID` to the application ID and `DISCORD_TOKEN` to the test bot token.
 Set `DISCORD_TEST_SERVER_ID` to the 17 to 20 digit ID for the test server.
 Ask the test server owner for permission to add the bot.
 Set `DISCORD_TEST_SERVER_AUTHORIZED=true` only after the owner gives permission.
 
-Set `LOG_LEVEL` to change the log level. The default is `info`.
-Use `error`, `warn`, `info`, `http`, `verbose`, `debug`, or `silly`.
-The app rejects an unsupported log level before it creates the logger.
+| Value                            | Default                   | Required | Purpose                                                     | Example                    |
+| -------------------------------- | ------------------------- | -------- | ----------------------------------------------------------- | -------------------------- |
+| `DISCORD_CLIENT_ID`              | Unset                     | Yes      | Application ID for the test bot.                            | `your-test-application-id` |
+| `DISCORD_TOKEN`                  | Unset                     | Yes      | Token for the test bot.                                     | `your-test-bot-token`      |
+| `DISCORD_TEST_SERVER_ID`         | Unset                     | Yes      | 17 to 20 digit test server ID.                              | `123456789012345678`       |
+| `DISCORD_TEST_SERVER_AUTHORIZED` | `false` in `.env.example` | Yes      | Set to `true` only after the server owner gives permission. | `false`                    |
+| `LOG_LEVEL`                      | `info`                    | No       | Logger level. Use one listed value.                         | `info`                     |
 
-The application loads `.env` from the repository root. It uses the same root for configuration checks and Discord command, event, and locale files.
+Supported `LOG_LEVEL` values are `error`, `warn`, `info`, `http`, `verbose`, `debug`, and `silly`.
+The app rejects unsupported log levels before it creates the logger.
+The application loads `.env` from the repository root.
+The app uses that root for configuration checks and Discord command, event, and locale files.
 
 ## Invite the bot
 
@@ -56,6 +63,21 @@ The `interactionCreate` event sends slash commands to their app handlers.
 Keep the event adapters in `events/`.
 Keep event code in matching files under `src/events/`.
 Add an event only when the application needs it.
+
+## Health endpoints
+
+The app starts an HTTP server on port `1030` before it connects to Discord.
+The server binds to `0.0.0.0` and accepts `GET` requests without authentication.
+Allow access to port 1030 only from trusted networks.
+
+| Request       | Before Discord connects             | After `clientReady`             | Purpose                                       |
+| ------------- | ----------------------------------- | ------------------------------- | --------------------------------------------- |
+| `GET /health` | `200` with `{"status":"ok"}`        | `200` with `{"status":"ok"}`    | Confirms that the HTTP process responds.      |
+| `GET /ready`  | `503` with `{"status":"not ready"}` | `200` with `{"status":"ready"}` | Reports if the `clientReady` event has fired. |
+
+The server returns `405` for other methods and `404` for unknown paths.
+The server sets `Cache-Control: no-store` on its responses.
+Use `/health` for process checks and `/ready` for traffic readiness checks.
 
 ## Locales
 
@@ -93,20 +115,16 @@ Set `DISCORD_TEST_SERVER_AUTHORIZED=true` only after the owner gives permission.
 npm start
 ```
 
-The command loads `.env` and checks credentials, the test server ID, permission confirmation, and app files before it connects.
+The command validates credentials, the test server ID, permission confirmation, and app files before it connects.
 The app cannot verify the selected bot or server. Use only a test bot and a test server.
-The app root comes from the entry point path, so the command can start from any working directory.
-The library handles process errors and shutdown signals for this Discord-only app.
-It calls `client.shutdown()` during shutdown.
-
-If the application adds other services, use one app-owned shutdown coordinator.
-Stop app services before the coordinator calls `client.shutdown()`.
-Use that coordinator for signal and manual shutdown.
-Read the `@eliware/discord` lifecycle guide for details.
+The app root comes from the entry point path, so direct Node.js startup can use any working directory.
+On `SIGINT` or `SIGTERM`, the app closes the HTTP server before it shuts down Discord.
+The app uses the same repeatable shutdown path when code calls `client.shutdown()`.
 
 ## Container image
 
 Build a local image with `docker build -t discord-template .`.
+Run the image with `docker run --env-file .env -p 127.0.0.1:1030:1030 discord-template`.
 The Dockerfile runs the app as the unprivileged `node` user.
 Pass credentials through an approved runtime secret store.
 Do not copy `.env` into the image.
@@ -115,16 +133,24 @@ Do not copy `.env` into the image.
 > Image visibility: [public or private before publication].
 > Accounts with pull access: [list users and teams, or state that anyone can pull a public image].
 >
+> Eliware owns the Dockerfile and repository files used as image build inputs.
+> The workflow leaves `platforms` unset and builds for the `ubuntu-latest` runner architecture.
 > The workflow uses `GITHUB_TOKEN` with `packages: write` to publish. This does not set image visibility or pull access.
-> The workflow builds `linux/amd64` images. Confirm the supported architecture and the owner of each build input.
 > Replace these placeholders after you create a Discord application repository.
+
+The GHCR workflow publishes version tags. It uses `GITHUB_TOKEN` with `packages: write`.
+That token grants publishing access, but it does not set image visibility or pull access.
+Publication does not deploy the app. Record and use the image SHA-256 digest for deployment.
 
 ## Troubleshooting
 
 If startup reports a missing application ID, set `DISCORD_CLIENT_ID` in the root `.env` file.
 If startup reports a missing token, set `DISCORD_TOKEN` in the root `.env` file.
+If an application uses port 1030, stop it before startup.
+If `/ready` returns `503`, check the Discord credentials and connection.
 If `/help` does not appear, check the `applications.commands` scope and bot authorization.
 If `/help` cannot reply, grant View Channels and Send Messages.
+
 If a locale check fails, compare its message keys with `locales/en-US.json`.
 If a command check fails, compare its definition, adapter, handler, and locale fields.
 

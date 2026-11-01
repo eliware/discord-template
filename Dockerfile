@@ -9,5 +9,7 @@ COPY --chown=node:node events ./events
 COPY --chown=node:node locales ./locales
 COPY --chown=node:node src ./src
 
+EXPOSE 1030
+
 USER node
 CMD ["node", "bin/discord-template.mjs"]

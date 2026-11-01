@@ -1,5 +1,5 @@
-version: "15.0"
-description: Repository-specific Discord application requirements.
+version: "15.1"
+description: Repository-specific Discord application and HTTP health endpoint requirements.
 directives:
   - id: E-1030.0
     dos:
@@ -16,6 +16,10 @@ directives:
       - Provide a command that adds a message key to locale catalogs without replacing translations.
       - Validate LOG_LEVEL before creating the logger.
       - Require a numeric test server ID and permission confirmation before a Discord connection.
+      - Start HTTP health and readiness endpoints on port 1030 before Discord connects.
+      - Listen on all interfaces and return 200 from GET /health while the HTTP server runs.
+      - Return 503 from `/ready` until Discord emits `clientReady`, then return 200.
+      - Stop the HTTP server before shutting down the Discord client.
       - Document the image visibility and accounts with pull access as template placeholders.
     donts:
       - Do not move discovery folders, connect to Discord in tests, or commit credentials.

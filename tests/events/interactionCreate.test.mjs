@@ -13,12 +13,12 @@ test("dispatches a localized slash command to its app handler", async () => {
   };
 
   await handler(
-    { client, log, msg, commandHandlers: { help: command }, version: "15.0.0" },
+    { client, log, msg, commandHandlers: { help: command }, version: "15.1.0" },
     interaction,
   );
 
   expect(command).toHaveBeenCalledWith(
-    { client, log, msg: expect.any(Function), version: "15.0.0" },
+    { client, log, msg: expect.any(Function), version: "15.1.0" },
     interaction,
   );
   const localizedMessage = command.mock.calls[0][0].msg;

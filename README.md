@@ -25,7 +25,7 @@ A modern Discord app built with Node.js, based on the eliware/discord foundation
 
 ## Features
 
-This template starts Discord applications. Each derived application owns its behavior and operating decisions.
+Eliware owns this template. It runs a Discord app and provides HTTP health and readiness endpoints.
 
 ## Requirements
 
@@ -33,88 +33,47 @@ Use Node.js 26 or later and npm 12 or later for repository validation.
 
 ## Setup
 
-Create a repository from this template. Replace the template name, description, URLs, keywords, and sample content.
-Run `npm ci` from the repository root.
-Copy `.env.example` to `.env`, then set `DISCORD_CLIENT_ID` and `DISCORD_TOKEN`.
+Create a repository from this template and follow the [user guide](docs/README.md).
 
 ## Usage
 
-Follow this README and the [user guide](docs/README.md). Read [release notes](RELEASE_NOTES.md) for release history.
+Read the [user guide](docs/README.md) for setup and operations. Read [release notes](RELEASE_NOTES.md) for release history.
 
 ## Development
 
-Read [AGENTS.md](AGENTS.md) and [the specifications index](specs/README.md) before you change files.
-Keep documents and records in the repository that owns them.
+Read [AGENTS.md](AGENTS.md) and the [specifications index](specs/README.md) before changing files.
 
 ## Testing
 
-Run `npm test` before handoff. It runs the repository checks through `eliware-test`.
+Run `npm test` for aggregate validation.
 
 ## Troubleshooting
 
-If the app cannot connect, verify `DISCORD_CLIENT_ID` and `DISCORD_TOKEN`. Confirm that the token matches the application.
-If `/help` does not appear, check that the bot invite includes the `applications.commands` scope.
-If `/help` cannot send a reply, grant View Channels and Send Messages.
-See the [Discord application guide](docs/README.md) for setup steps.
+Use the troubleshooting section in the [user guide](docs/README.md#troubleshooting).
 
 ## Security
 
-Keep credentials, secrets, private data, and runtime state out of Git.
-Use only approved secret stores for secret values.
+Keep credentials, private data, and runtime state out of Git.
 
 ## Configuration
 
-Set these values in an untracked `.env` file or an approved secret store.
-
-| Variable                         | Default | Required | Purpose                                                                               |
-| -------------------------------- | ------- | -------- | ------------------------------------------------------------------------------------- |
-| `DISCORD_CLIENT_ID`              | None    | Yes      | Application ID for the test bot.                                                      |
-| `DISCORD_TOKEN`                  | None    | Yes      | Token for the test bot.                                                               |
-| `DISCORD_TEST_SERVER_ID`         | None    | Yes      | 17 to 20 digit ID for the test server.                                                |
-| `DISCORD_TEST_SERVER_AUTHORIZED` | None    | Yes      | Set to `true` only after the server owner gives permission. The example uses `false`. |
-| `LOG_LEVEL`                      | `info`  | No       | Supported values: `error`, `warn`, `info`, `http`, `verbose`, `debug`, and `silly`.   |
-
-The app rejects unsupported `LOG_LEVEL` values before startup.
+Read the [configuration reference](docs/README.md#configuration).
 
 ## Operations
 
-Live Discord connection: `npm start` connects `<test bot>` to `<test server>`.
-Use credentials for a test bot. Set the numeric ID for the test server.
-Ask the server owner for permission before you add the bot. Set `DISCORD_TEST_SERVER_AUTHORIZED=true` only after the owner says yes.
-
-The app checks the server ID format and permission confirmation before it connects.
-It cannot verify the selected bot or server.
-
-Run `npm start` from the repository root to validate configuration and connect to Discord.
-Build a local image with `docker build -t discord-template .`.
-
-> **Template setup — update these values after you create a Discord application repository.**
->
-> Image purpose: runs this starter Discord app.
-> Image visibility: [public or private before publication].
-> Accounts with pull access: [list users and teams, or state that anyone can pull a public image].
->
-> The workflow uses `GITHUB_TOKEN` with `packages: write` to publish. This does not set image visibility or pull access.
-> The workflow builds `linux/amd64` images. Confirm the supported architecture and the owner of each build input.
-> Replace these placeholders after you create a Discord application repository.
-
-Deploy with a published version tag and its recorded SHA-256 digest.
-Publication does not deploy the bot.
+Run `npm start` to start Discord and the HTTP server on port 1030. Read the [health endpoint guide](docs/README.md#health-endpoints) and [container guidance](docs/README.md#container-image).
 
 ## Commands
 
-The starter registers the localized `/help` command. Its definition is `commands/help.json`.
-Its implementation is `src/commands/help.mjs`. It returns a private reply to the person who invoked it.
-Keep the root `commands/` file as a discovery adapter. Update the definition and implementation together.
+The starter registers the localized `/help` command. Read the [command guide](docs/README.md#commands).
 
 ## Events
 
-Put event logic in `src/events/`. Keep matching discovery adapters in `events/`.
-Keep the same keys in every locale file. Each event module must have a matching test.
+The starter handles `clientReady` and `interactionCreate`. Read the [event guide](docs/README.md#events).
 
 ## Intents and permissions
 
-The client enables only the Guilds intent. The `/help` command needs channel view and message send permissions. Add access only when a command or event needs it.
+The client enables only the Guilds intent. Read the [Discord permissions guide](docs/README.md#intents-and-permissions).
 
 ## Support
 

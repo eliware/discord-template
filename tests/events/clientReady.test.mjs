@@ -4,7 +4,11 @@ import handler from "../../src/events/clientReady.mjs";
 test("logs readiness and applies configured presence", async () => {
   const log = { debug: jest.fn(), info: jest.fn() };
   const client = { user: { tag: "test#0001", setPresence: jest.fn() } };
-  await expect(handler({ log, presence: { status: "online" } }, client)).resolves.toBeUndefined();
+  const healthServer = { setReady: jest.fn() };
+  await expect(
+    handler({ healthServer, log, presence: { status: "online" } }, client),
+  ).resolves.toBeUndefined();
+  expect(healthServer.setReady).toHaveBeenCalledWith(true);
   expect(log.info).toHaveBeenCalledWith("Logged in as test#0001");
   expect(client.user.setPresence).toHaveBeenCalledWith({ status: "online" });
 });

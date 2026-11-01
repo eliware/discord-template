@@ -2,7 +2,7 @@
 
 ## Project
 
-See README.md for repository purpose, ownership, and scope.
+Eliware owns this Discord application template. See README.md for its purpose and scope.
 
 ## Scope and boundaries
 
@@ -19,11 +19,11 @@ Give each source and test module one cohesive purpose.
 ## Validation
 
 Use Node.js 26 or later and native ESM for maintained JavaScript modules.
-Run npm test for aggregate validation.
-Run npm run lint for lint checks.
-Run npm run audit for dependency checks.
-Run npm run format to format files.
-Run npm run format:check to check formatting.
+Run `npm test` for aggregate validation.
+Run `npm run lint` for lint checks.
+Run `npm run audit` for dependency checks.
+Run `npm run format` to format files.
+Run `npm run format:check` to check formatting.
 
 ## Security
 
@@ -31,7 +31,7 @@ Keep credentials, secret values, private data, and runtime state out of Git.
 
 ## Changes
 
-Keep each document in the repository that owns its content. Update its nearest index when you add a document.
+Update focused tests and user documentation when application behavior changes.
 
 ## Application
 
@@ -43,13 +43,13 @@ Run the full `npm test` suite for final validation before a commit, milestone, o
 
 ## Discord
 
-Keep command and event logic in src/. Keep the root commands/ and events/ folders as discovery adapters.
+Keep command and event logic in src/. Keep root commands/ and events/ as discovery adapters.
 
 ## GHCR publication
 
 Image: ghcr.io/eliware/discord-template
 
-Pull command: docker pull ghcr.io/eliware/discord-template:v15.0.1
+Pull command: docker pull ghcr.io/eliware/discord-template:v15.1.0
 
 Supported tags: vMAJOR.MINOR.PATCH
 

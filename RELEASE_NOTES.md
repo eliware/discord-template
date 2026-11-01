@@ -1,5 +1,20 @@
 # Release Notes
 
+## 15.1.0 — 2026-11-01
+
+### Added
+
+- Add HTTP `/health` and `/ready` endpoints on port 1030.
+- Return 503 from `/ready` until Discord emits `clientReady`, then return 200.
+- Stop HTTP before Discord for signals and calls to `client.shutdown()`.
+- Expose port 1030 in the container image and document health checks, configuration, and container startup.
+
+### Changed
+
+- Update `@eliware/discord`, `@eliware/test`, and `discord.js` to their latest compatible releases.
+- Refresh the dependency lockfile and set the package version to 15.1.0.
+- Keep only root guidance that shared conventions require.
+
 ## 15.0.1 — 2026-10-26
 
 ### Changed
